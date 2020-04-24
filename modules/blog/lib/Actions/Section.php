@@ -11,9 +11,11 @@ class Section extends AbstractAction
 
     public function index()
     {
+        echo 'section index';
     }
 
     public function add()
     {
+        echo 'testttt';
     }
 }

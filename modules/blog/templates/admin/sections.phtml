@@ -1,0 +1,56 @@
+<?php
+
+/**
+ * @var $title
+ * @var $page_title
+ * @var $data
+ */
+
+$this->layout(
+    'system::layout/default',
+    [
+        'title'      => $title,
+        'page_title' => $page_title,
+    ]
+);
+
+/** @var \Blog\Models\BlogSection $sections */
+$sections = $data['sections'];
+
+?>
+
+<div class="mb-3">
+    <a href="/blog/admin/add_article/" class="btn btn-primary"><?= __('Add article') ?></a>
+    <a href="/blog/admin/add_section/" class="btn btn-primary"><?= __('Add section') ?></a>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th style="width: 80px;">#</th>
+        <th><?= __('Name') ?></th>
+        <th><?= __('Code') ?></th>
+        <th style="width: 150px;"><?= __('Created at') ?></th>
+        <th style="width: 150px;"><?= __('Updated at') ?></th>
+    </tr>
+    </thead>
+    <tbody>
+    <?php if ($sections->count() > 0): ?>
+        <?php foreach ($sections as $section): ?>
+            <?php /** @var \Blog\Models\BlogSection $section */ ?>
+            <tr>
+                <th scope="row"><?= $section->id ?></th>
+                <td><?= $section->name ?></td>
+                <td><?= $section->code ?></td>
+                <td><?= $section->created_at ?></td>
+                <td><?= $section->updated_at ?></td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="5" class="text-center font-weight-bold"><?= __('The list is empty') ?></td>
+        </tr>
+    <?php endif; ?>
+    </tbody>
+</table>
+

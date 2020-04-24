@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use Blog\Actions\Article;
+use Blog\Actions\Section;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
@@ -28,16 +30,16 @@ $loader = new Aura\Autoload\Loader();
 $loader->register();
 $loader->addPrefix('Blog', __DIR__ . '/lib');
 
-$module_path = '/blog';
-
-$category = $route['category'] ?? 'index';
-
-if ($category === 'i' && $user->rights >= 9 && is_file(__DIR__ . '/install.php')) {
-    require 'install.php';
-    exit;
+if (! empty($route['article'])) {
+    // Если запросили страницу статьи, открываем её
+    (new Article())->index();
+} else {
+    // Страница просмотра раздела
+    (new Section())->index();
 }
 
 
+/*
 
 // Определяем что хочет открыть пользователь...
 $segments = explode('/', $category);
@@ -59,9 +61,6 @@ $test = ucfirst('test_test');
 d($test);
 
 d($route);
+*/
 
 
-
-if (! empty($route['article'])) {
-    (new \Blog\Actions\Article())->index();
-}

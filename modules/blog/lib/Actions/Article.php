@@ -10,5 +10,6 @@ class Article extends AbstractAction
 {
     public function index()
     {
+        echo 'ааукаукуиуму ';
     }
 }
