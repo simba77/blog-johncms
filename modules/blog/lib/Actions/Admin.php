@@ -15,13 +15,13 @@ class Admin extends AbstractAction
      */
     public function index(): void
     {
-        echo $this->render->render(
-            'blog::admin/index',
+        $this->render->addData(
             [
                 'title'      => __('Admin panel'),
                 'page_title' => __('Admin panel'),
             ]
         );
+        echo $this->render->render('blog::admin/index');
     }
 
     /**
@@ -43,15 +43,21 @@ class Admin extends AbstractAction
         }
 
         $data = [];
-        $data['sections'] = (new BlogSection())->where('parent', $section_id)->orWhereNull('parent')->get();
 
-        echo $this->render->render(
-            'blog::admin/sections',
+        if (! empty($_SESSION['success_message'])) {
+            $data['messages'] = htmlspecialchars($_SESSION['success_message']);
+            unset($_SESSION['success_message']);
+        }
+
+        $data['sections'] = (new BlogSection())->where('parent', $section_id)->orWhereNull('parent')->get();
+        $data['current_section'] = $section_id;
+
+        $this->render->addData(
             [
                 'title'      => $title,
                 'page_title' => $title,
-                'data'       => $data,
             ]
         );
+        echo $this->render->render('blog::admin/sections', ['data' => $data]);
     }
 }

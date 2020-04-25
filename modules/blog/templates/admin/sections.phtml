@@ -18,13 +18,24 @@ $this->layout(
 $sections = $data['sections'];
 
 ?>
+<?php if (! empty($data['messages'])): ?>
+    <div>
+        <?= $this->fetch(
+            'system::app/alert',
+            [
+                'alert_type' => 'alert-success',
+                'alert'      => $data['messages'],
+            ]
+        ) ?>
+    </div>
+<?php endif ?>
 
 <div class="mb-3">
-    <a href="/blog/admin/add_article/" class="btn btn-primary"><?= __('Add article') ?></a>
-    <a href="/blog/admin/add_section/" class="btn btn-primary"><?= __('Add section') ?></a>
+    <a href="/blog/admin/add_article/?section_id=<?= $data['current_section'] ?>" class="btn btn-primary"><?= __('Add article') ?></a>
+    <a href="/blog/admin/add_section/?section_id=<?= $data['current_section'] ?>" class="btn btn-primary"><?= __('Add section') ?></a>
 </div>
 
-<table class="table table-bordered">
+<table class="table table-bordered bg-white">
     <thead>
     <tr>
         <th style="width: 80px;">#</th>

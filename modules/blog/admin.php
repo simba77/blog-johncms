@@ -40,9 +40,6 @@ $nav_chain->add(__('Admin panel'), '/blog/admin/');
 // Проверяем запрошенную страницу. Если это одна из админских страниц, пытаемся её открыть.
 if ($user->rights >= 9) {
     switch ($category) {
-        case 'add_section':
-            (new Section())->add();
-            break;
         case 'del_section':
             (new Section())->del();
             break;
@@ -72,6 +69,11 @@ if ($user->rights >= 9) {
         // Управление контентом
         case 'content':
             (new Admin())->section();
+            break;
+
+        // Страница добавления раздела
+        case 'add_section':
+            (new Section())->add();
             break;
 
         // Неизвестная страница
