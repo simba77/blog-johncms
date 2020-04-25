@@ -6,6 +6,7 @@ namespace Blog\Actions;
 
 use Blog\Models\BlogSection;
 use Blog\Utils\AbstractAction;
+use Illuminate\Support\Str;
 
 class Section extends AbstractAction
 {
@@ -16,7 +17,7 @@ class Section extends AbstractAction
     }
 
     /**
-     * Страница добавления раздела
+     * Section creation page
      */
     public function add(): void
     {
@@ -41,29 +42,47 @@ class Section extends AbstractAction
             ],
         ];
 
+        $data['fields'] = array_map('trim', $data['fields']);
+
+        $errors = [];
+        // Processing the sent data from the form.
         if ($this->request->getMethod() === 'POST') {
-            if (! empty($section_id)) {
-                $check = (new BlogSection())
-                    ->where('code', $data['fields']['code'])
-                    ->where('parent', $section_id)
-                    ->first();
+            if (empty($data['fields']['name'])) {
+                $errors[] = __('The section name cannot be empty');
+            }
+
+            // Code generation
+            if (empty($data['fields']['code'])) {
+                $data['fields']['code'] = Str::slug($data['fields']['name']);
             } else {
-                $check = (new BlogSection())
-                    ->where('code', $data['fields']['code'])
-                    ->whereNull('parent')
-                    ->orWhere('parent', '=', 0)
-                    ->first();
+                $data['fields']['code'] = Str::slug($data['fields']['code']);
             }
 
-            if (! $check) {
-                (new BlogSection())->create($data['fields']);
-                $_SESSION['success_message'] = __('The section was created successfully');
-                header('Location: /blog/admin/content/?section_id=' . $section_id);
-                exit;
-            }
+            if (empty($errors)) {
+                if (! empty($section_id)) {
+                    $check = (new BlogSection())
+                        ->where('code', $data['fields']['code'])
+                        ->where('parent', $section_id)
+                        ->first();
+                } else {
+                    $check = (new BlogSection())
+                        ->where('code', $data['fields']['code'])
+                        ->whereNull('parent')
+                        ->orWhere('parent', '=', 0)
+                        ->first();
+                }
 
-            $data['errors'][] = __('A section with this code already exists');
+                if (! $check) {
+                    (new BlogSection())->create($data['fields']);
+                    $_SESSION['success_message'] = __('The section was created successfully');
+                    header('Location: /blog/admin/content/?section_id=' . $section_id);
+                    exit;
+                }
+                $errors[] = __('A section with this code already exists');
+            }
         }
+
+        $data['errors'] = $errors;
 
         echo $this->render->render('blog::admin/add_section', ['data' => $data]);
     }
