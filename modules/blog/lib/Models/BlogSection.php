@@ -2,6 +2,7 @@
 
 namespace Blog\Models;
 
+use Blog\Casts\FormattedDate;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -33,6 +34,8 @@ class BlogSection extends Model
     ];
 
     protected $casts = [
-        'parent' => 'integer',
+        'parent'     => 'integer',
+        'created_at' => FormattedDate::class,
+        'updated_at' => FormattedDate::class,
     ];
 }
