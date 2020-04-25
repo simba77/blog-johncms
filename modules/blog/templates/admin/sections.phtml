@@ -50,9 +50,9 @@ $sections = $data['sections'];
         <?php foreach ($sections as $section): ?>
             <?php /** @var \Blog\Models\BlogSection $section */ ?>
             <tr>
-                <th scope="row"><?= $section->id ?></th>
-                <td><?= $section->name ?></td>
-                <td><?= $section->code ?></td>
+                <th scope="row"><a href="/blog/admin/content/?section_id=<?= $section->id ?>"><?= $section->id ?></a></th>
+                <td><a href="/blog/admin/content/?section_id=<?= $section->id ?>"><?= $section->name ?></a></td>
+                <td><a href="/blog/admin/content/?section_id=<?= $section->id ?>"><?= $section->code ?></a></td>
                 <td><?= $section->created_at ?></td>
                 <td><?= $section->updated_at ?></td>
             </tr>

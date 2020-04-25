@@ -49,7 +49,12 @@ class Admin extends AbstractAction
             unset($_SESSION['success_message']);
         }
 
-        $data['sections'] = (new BlogSection())->where('parent', $section_id)->orWhereNull('parent')->get();
+        if (empty($section_id)) {
+            $data['sections'] = (new BlogSection())->where('parent', $section_id)->orWhereNull('parent')->get();
+        } else {
+            $data['sections'] = (new BlogSection())->where('parent', $section_id)->get();
+        }
+
         $data['current_section'] = $section_id;
 
         $this->render->addData(
