@@ -37,6 +37,25 @@ class Admin extends AbstractAction
             try {
                 $current_section = (new BlogSection())->findOrFail($section_id);
                 $title = $current_section->name;
+
+                // Collecting parent sections to build a navigation chain
+                $parent_tree = [];
+                $parent = $current_section->parentSection;
+                while ($parent !== null) {
+                    $parent_tree[] = [
+                        'name' => $parent->name,
+                        'url'  => '/blog/admin/content/?section_id=' . $parent->id,
+                    ];
+                    $parent = $parent->parentSection;
+                }
+
+                krsort($parent_tree);
+                foreach ($parent_tree as $item) {
+                    $this->nav_chain->add($item['name'], $item['url']);
+                }
+
+                // Adding the current section to the navigation chain
+                $this->nav_chain->add($current_section->name);
             } catch (ModelNotFoundException $exception) {
                 pageNotFound();
             }
