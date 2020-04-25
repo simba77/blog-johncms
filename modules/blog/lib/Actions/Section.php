@@ -34,6 +34,7 @@ class Section extends AbstractAction
         $data = [
             'section_id' => $section_id,
             'fields'     => [
+                'parent'      => $section_id,
                 'name'        => $this->request->getPost('name', '', FILTER_SANITIZE_STRING),
                 'code'        => $this->request->getPost('code', '', FILTER_SANITIZE_STRING),
                 'keywords'    => $this->request->getPost('keywords', '', FILTER_SANITIZE_STRING),
