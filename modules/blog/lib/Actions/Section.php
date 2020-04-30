@@ -6,6 +6,7 @@ namespace Blog\Actions;
 
 use Blog\Models\BlogSection;
 use Blog\Utils\AbstractAction;
+use Blog\Utils\Helpers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 
@@ -22,7 +23,7 @@ class Section extends AbstractAction
      */
     public function add(): void
     {
-        $this->nav_chain->add(__('Create section'));
+        $this->nav_chain->add(__('Section list'), '/blog/admin/content/');
         $this->render->addData(
             [
                 'title'      => __('Create section'),
@@ -31,6 +32,21 @@ class Section extends AbstractAction
         );
 
         $section_id = $this->request->getQuery('section_id', 0, FILTER_VALIDATE_INT);
+
+        if (! empty($section_id)) {
+            try {
+                $current_section = (new BlogSection())->findOrFail($section_id);
+
+                Helpers::buildAdminBreadcrumbs($current_section->parentSection);
+
+                // Adding the current section to the navigation chain
+                $this->nav_chain->add($current_section->name, '/blog/admin/content/?section_id=' . $current_section->id);
+            } catch (ModelNotFoundException $exception) {
+                pageNotFound();
+            }
+        }
+
+        $this->nav_chain->add(__('Create section'));
 
         $data = [
             'action_url' => '/blog/admin/add_section/?section_id=' . $section_id,
@@ -97,7 +113,7 @@ class Section extends AbstractAction
      */
     public function edit(): void
     {
-        $this->nav_chain->add(__('Edit section'));
+        $this->nav_chain->add(__('Section list'), '/blog/admin/content/');
         $this->render->addData(
             [
                 'title'      => __('Edit section'),
@@ -109,9 +125,12 @@ class Section extends AbstractAction
 
         try {
             $section = (new BlogSection())->findOrFail($section_id);
+            Helpers::buildAdminBreadcrumbs($section->parentSection);
         } catch (ModelNotFoundException $exception) {
             pageNotFound();
         }
+
+        $this->nav_chain->add(__('Edit section'));
 
         $data = [
             'action_url' => '/blog/admin/edit_section/?section_id=' . $section_id,

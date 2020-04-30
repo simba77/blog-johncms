@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Blog\Actions;
 
 use Blog\Models\BlogArticle;
+use Blog\Models\BlogSection;
 use Blog\Utils\AbstractAction;
+use Blog\Utils\Helpers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 
@@ -16,7 +18,7 @@ class Article extends AbstractAction
      */
     public function add(): void
     {
-        $this->nav_chain->add(__('Add article'));
+        $this->nav_chain->add(__('Section list'), '/blog/admin/content/');
         $this->render->addData(
             [
                 'title'      => __('Add article'),
@@ -25,6 +27,21 @@ class Article extends AbstractAction
         );
 
         $section_id = $this->request->getQuery('section_id', 0, FILTER_VALIDATE_INT);
+
+        if (! empty($section_id)) {
+            try {
+                $current_section = (new BlogSection())->findOrFail($section_id);
+
+                Helpers::buildAdminBreadcrumbs($current_section->parentSection);
+
+                // Adding the current section to the navigation chain
+                $this->nav_chain->add($current_section->name, '/blog/admin/content/?section_id=' . $current_section->id);
+            } catch (ModelNotFoundException $exception) {
+                pageNotFound();
+            }
+        }
+
+        $this->nav_chain->add(__('Add article'));
 
         $data = [
             'action_url' => '/blog/admin/add_article/?section_id=' . $section_id,
@@ -92,7 +109,7 @@ class Article extends AbstractAction
      */
     public function edit(): void
     {
-        $this->nav_chain->add(__('Edit article'));
+        $this->nav_chain->add(__('Section list'), '/blog/admin/content/');
         $this->render->addData(
             [
                 'title'      => __('Edit article'),
@@ -106,6 +123,9 @@ class Article extends AbstractAction
         } catch (ModelNotFoundException $exception) {
             pageNotFound();
         }
+
+        Helpers::buildAdminBreadcrumbs($article->parentSection);
+        $this->nav_chain->add($article->name);
 
         $data = [
             'action_url' => '/blog/admin/edit_article/?article_id=' . $article->id,

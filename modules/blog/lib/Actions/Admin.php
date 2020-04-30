@@ -7,6 +7,7 @@ namespace Blog\Actions;
 use Blog\Models\BlogArticle;
 use Blog\Models\BlogSection;
 use Blog\Utils\AbstractAction;
+use Blog\Utils\Helpers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Admin extends AbstractAction
@@ -39,21 +40,7 @@ class Admin extends AbstractAction
                 $current_section = (new BlogSection())->findOrFail($section_id);
                 $title = $current_section->name;
 
-                // Collecting parent sections to build a navigation chain
-                $parent_tree = [];
-                $parent = $current_section->parentSection;
-                while ($parent !== null) {
-                    $parent_tree[] = [
-                        'name' => $parent->name,
-                        'url'  => '/blog/admin/content/?section_id=' . $parent->id,
-                    ];
-                    $parent = $parent->parentSection;
-                }
-
-                krsort($parent_tree);
-                foreach ($parent_tree as $item) {
-                    $this->nav_chain->add($item['name'], $item['url']);
-                }
+                Helpers::buildAdminBreadcrumbs($current_section->parentSection);
 
                 // Adding the current section to the navigation chain
                 $this->nav_chain->add($current_section->name);
