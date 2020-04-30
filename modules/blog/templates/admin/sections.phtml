@@ -96,9 +96,9 @@ $articles = $data['articles'];
                         </div>
                     </div>
                 </th>
-                <th scope="row" class="border-left-0"><a href="/blog/admin/content/?section_id=<?= $article->id ?>"><?= $article->id ?></a></th>
-                <td><a href="/blog/admin/content/?section_id=<?= $article->id ?>"><?= $article->name ?></a></td>
-                <td><a href="/blog/admin/content/?section_id=<?= $article->id ?>"><?= $article->code ?></a></td>
+                <th scope="row" class="border-left-0"><a href="/blog/admin/edit_article/?article_id=<?= $article->id ?>"><?= $article->id ?></a></th>
+                <td><a href="/blog/admin/edit_article/?article_id=<?= $article->id ?>"><?= $article->name ?></a></td>
+                <td><a href="/blog/admin/edit_article/?article_id=<?= $article->id ?>"><?= $article->code ?></a></td>
                 <td><?= __('Article') ?></td>
                 <td><?= $article->created_at ?></td>
                 <td><?= $article->updated_at ?></td>
