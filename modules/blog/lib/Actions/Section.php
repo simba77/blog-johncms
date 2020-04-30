@@ -30,7 +30,7 @@ class Section extends AbstractAction
             ]
         );
 
-        $section_id = $this->request->getQuery('section_id', 0);
+        $section_id = $this->request->getQuery('section_id', 0, FILTER_VALIDATE_INT);
 
         $data = [
             'action_url' => '/blog/admin/add_section/?section_id=' . $section_id,
@@ -105,7 +105,7 @@ class Section extends AbstractAction
             ]
         );
 
-        $section_id = $this->request->getQuery('section_id', 0);
+        $section_id = $this->request->getQuery('section_id', 0, FILTER_VALIDATE_INT);
 
         try {
             $section = (new BlogSection())->findOrFail($section_id);

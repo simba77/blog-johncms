@@ -43,17 +43,8 @@ if ($user->rights >= 9) {
         case 'del_section':
             (new Section())->del();
             break;
-        case 'edit_section':
-            (new Section())->edit();
-            break;
-        case 'add_article':
-            (new Article())->add();
-            break;
         case 'del_article':
             (new Article())->del();
-            break;
-        case 'edit_article':
-            (new Article())->edit();
             break;
 
         // Установка
@@ -74,6 +65,21 @@ if ($user->rights >= 9) {
         // Страница добавления раздела
         case 'add_section':
             (new Section())->add();
+            break;
+
+        // Страница редактирования раздела
+        case 'edit_section':
+            (new Section())->edit();
+            break;
+
+        // Страница создания статьи
+        case 'add_article':
+            (new Article())->add();
+            break;
+
+        // Страница изменения статьи
+        case 'edit_article':
+            (new Article())->edit();
             break;
 
         // Неизвестная страница

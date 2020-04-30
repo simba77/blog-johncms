@@ -91,7 +91,7 @@ $articles = $data['articles'];
                             </svg>
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#"><?= __('Edit') ?></a>
+                            <a class="dropdown-item" href="/blog/admin/edit_article/?article_id=<?= $article->id ?>"><?= __('Edit') ?></a>
                             <a class="dropdown-item" href="#"><?= __('Delete') ?></a>
                         </div>
                     </div>
