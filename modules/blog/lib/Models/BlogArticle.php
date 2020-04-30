@@ -47,6 +47,7 @@ class BlogArticle extends Model
     protected $casts = [
         'parent'      => 'integer',
         'name'        => SpecialChars::class,
+        'page_title'  => SpecialChars::class,
         'keywords'    => SpecialChars::class,
         'description' => SpecialChars::class,
         'created_at'  => FormattedDate::class,
@@ -58,6 +59,6 @@ class BlogArticle extends Model
      */
     public function parentSection(): HasOne
     {
-        return $this->hasOne(BlogSection::class, 'id', 'parent');
+        return $this->hasOne(BlogSection::class, 'id', 'section_id');
     }
 }
