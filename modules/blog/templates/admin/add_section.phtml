@@ -16,8 +16,8 @@
                     </div>
                 <?php endif ?>
 
-                <h4 class="card-title"><?= __('Create section') ?></h4>
-                <form action="/blog/admin/add_section/?section_id=<?= $data['section_id'] ?>" method="post">
+                <h4 class="card-title"><?= $page_title ?></h4>
+                <form action="<?= $data['action_url'] ?>" method="post">
                     <div class="form-group">
                         <label for="title"><?= __('Section name') ?></label>
                         <input type="text"
@@ -70,7 +70,7 @@
                     </div>
                     <div>
                         <button type="submit" class="btn btn-primary"><?= __('Save') ?></button>
-                        <a href="/blog/admin/content/?section_id=<?= $data['section_id'] ?>" class="btn btn-outline-primary ml-2"><?= __('Back') ?></a>
+                        <a href="<?= $data['back_url'] ?>" class="btn btn-outline-primary ml-2"><?= __('Back') ?></a>
                     </div>
                 </form>
             </div>
