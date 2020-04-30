@@ -41,7 +41,8 @@ $articles = $data['articles'];
 <table class="table table-bordered bg-white">
     <thead>
     <tr>
-        <th style="width: 80px;">#</th>
+        <th style="width: 58px;" class="border-right-0"></th>
+        <th class="border-left-0">#</th>
         <th><?= __('Name') ?></th>
         <th><?= __('Code') ?></th>
         <th><?= __('Type') ?></th>
@@ -52,9 +53,25 @@ $articles = $data['articles'];
     <tbody>
     <?php if ($sections->count() > 0 || $articles->count() > 0): ?>
         <?php foreach ($sections as $section): ?>
+            <!-- List of sections -->
             <?php /** @var \Blog\Models\BlogSection $section */ ?>
             <tr>
-                <th scope="row"><a href="/blog/admin/content/?section_id=<?= $section->id ?>"><?= $section->id ?></a></th>
+                <th scope="row" style="width: 58px;" class="border-right-0">
+                    <div class="dropdown">
+                        <button class="btn btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg class="menu-icon">
+                                <use xlink:href="<?= $this->asset('blog/icons/icons.svg') ?>#menu"/>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#"><?= __('Edit') ?></a>
+                            <a class="dropdown-item" href="#"><?= __('Delete') ?></a>
+                        </div>
+                    </div>
+                </th>
+                <th scope="row" class="border-left-0">
+                    <a href="/blog/admin/content/?section_id=<?= $section->id ?>"><?= $section->id ?></a>
+                </th>
                 <td><a href="/blog/admin/content/?section_id=<?= $section->id ?>"><?= $section->name ?></a></td>
                 <td><a href="/blog/admin/content/?section_id=<?= $section->id ?>"><?= $section->code ?></a></td>
                 <td><?= __('Section') ?></td>
@@ -63,9 +80,23 @@ $articles = $data['articles'];
             </tr>
         <?php endforeach; ?>
         <?php foreach ($articles as $article): ?>
+            <!-- List of articles -->
             <?php /** @var \Blog\Models\BlogArticle $article */ ?>
             <tr>
-                <th scope="row"><a href="/blog/admin/content/?section_id=<?= $article->id ?>"><?= $article->id ?></a></th>
+                <th scope="row" style="width: 58px;" class="border-right-0">
+                    <div class="dropdown">
+                        <button class="btn btn-sm" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <svg class="menu-icon">
+                                <use xlink:href="<?= $this->asset('blog/icons/icons.svg') ?>#menu"/>
+                            </svg>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#"><?= __('Edit') ?></a>
+                            <a class="dropdown-item" href="#"><?= __('Delete') ?></a>
+                        </div>
+                    </div>
+                </th>
+                <th scope="row" class="border-left-0"><a href="/blog/admin/content/?section_id=<?= $article->id ?>"><?= $article->id ?></a></th>
                 <td><a href="/blog/admin/content/?section_id=<?= $article->id ?>"><?= $article->name ?></a></td>
                 <td><a href="/blog/admin/content/?section_id=<?= $article->id ?>"><?= $article->code ?></a></td>
                 <td><?= __('Article') ?></td>
@@ -81,3 +112,7 @@ $articles = $data['articles'];
     </tbody>
 </table>
 <?= $articles->render() ?>
+
+<?php $this->push('styles'); ?>
+<link rel="stylesheet" href="<?= $this->asset('blog/css/blog.css', true) ?>">
+<?php $this->stop(); ?>
