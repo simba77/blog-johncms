@@ -17,6 +17,9 @@ $this->layout(
 /** @var \Blog\Models\BlogSection $sections */
 $sections = $data['sections'];
 
+/** @var \Illuminate\Pagination\LengthAwarePaginator $articles */
+$articles = $data['articles'];
+
 ?>
 <?php if (! empty($data['messages'])): ?>
     <div>
@@ -41,20 +44,33 @@ $sections = $data['sections'];
         <th style="width: 80px;">#</th>
         <th><?= __('Name') ?></th>
         <th><?= __('Code') ?></th>
+        <th><?= __('Type') ?></th>
         <th style="width: 170px;"><?= __('Created at') ?></th>
         <th style="width: 170px;"><?= __('Updated at') ?></th>
     </tr>
     </thead>
     <tbody>
-    <?php if ($sections->count() > 0): ?>
+    <?php if ($sections->count() > 0 || $articles->count() > 0): ?>
         <?php foreach ($sections as $section): ?>
             <?php /** @var \Blog\Models\BlogSection $section */ ?>
             <tr>
                 <th scope="row"><a href="/blog/admin/content/?section_id=<?= $section->id ?>"><?= $section->id ?></a></th>
                 <td><a href="/blog/admin/content/?section_id=<?= $section->id ?>"><?= $section->name ?></a></td>
                 <td><a href="/blog/admin/content/?section_id=<?= $section->id ?>"><?= $section->code ?></a></td>
+                <td><?= __('Section') ?></td>
                 <td><?= $section->created_at ?></td>
                 <td><?= $section->updated_at ?></td>
+            </tr>
+        <?php endforeach; ?>
+        <?php foreach ($articles as $article): ?>
+            <?php /** @var \Blog\Models\BlogArticle $article */ ?>
+            <tr>
+                <th scope="row"><a href="/blog/admin/content/?section_id=<?= $article->id ?>"><?= $article->id ?></a></th>
+                <td><a href="/blog/admin/content/?section_id=<?= $article->id ?>"><?= $article->name ?></a></td>
+                <td><a href="/blog/admin/content/?section_id=<?= $article->id ?>"><?= $article->code ?></a></td>
+                <td><?= __('Article') ?></td>
+                <td><?= $article->created_at ?></td>
+                <td><?= $article->updated_at ?></td>
             </tr>
         <?php endforeach; ?>
     <?php else: ?>
@@ -64,4 +80,4 @@ $sections = $data['sections'];
     <?php endif; ?>
     </tbody>
 </table>
-
+<?= $articles->render() ?>

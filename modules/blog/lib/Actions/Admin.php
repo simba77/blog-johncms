@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Blog\Actions;
 
+use Blog\Models\BlogArticle;
 use Blog\Models\BlogSection;
 use Blog\Utils\AbstractAction;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -70,8 +71,10 @@ class Admin extends AbstractAction
 
         if (empty($section_id)) {
             $data['sections'] = (new BlogSection())->where('parent', $section_id)->orWhereNull('parent')->get();
+            $data['articles'] = (new BlogArticle())->where('section_id', $section_id)->orWhereNull('section_id')->orderBy('id')->paginate($this->user->set_user->kmess);
         } else {
             $data['sections'] = (new BlogSection())->where('parent', $section_id)->get();
+            $data['articles'] = (new BlogArticle())->where('section_id', $section_id)->orderBy('id')->paginate($this->user->set_user->kmess);
         }
 
         $data['current_section'] = $section_id;
