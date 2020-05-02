@@ -37,30 +37,3 @@ if (! empty($route['article'])) {
     // Страница просмотра раздела
     (new Section())->index();
 }
-
-
-/*
-
-// Определяем что хочет открыть пользователь...
-$segments = explode('/', $category);
-d($segments);
-
-$module_pages = [
-    'add_sec',
-];
-
-
-$str = \Illuminate\Support\Str::slug('Говно');
-
-d($str);
-
-$str = \Illuminate\Support\Str::studly('test-test');
-d($str);
-$test = ucfirst('test_test');
-
-d($test);
-
-d($route);
-*/
-
-

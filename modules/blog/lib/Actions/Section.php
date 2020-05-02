@@ -13,9 +13,45 @@ use Illuminate\Support\Str;
 class Section extends AbstractAction
 {
 
-    public function index()
+    public function index(): void
     {
-        echo 'section index';
+        $route = $this->route;
+        $current_section = null;
+
+        $page_title = __('Blog');
+        $title = __('Blog');
+        $this->nav_chain->add($page_title, '/blog/');
+
+        if (! empty($route['category'])) {
+            $path = Helpers::checkPath($route['category']);
+            if (! empty($path)) {
+                foreach ($path as $item) {
+                    /** @var $item BlogSection */
+                    $this->nav_chain->add($item->name, $item->url);
+                }
+                /** @var BlogSection $current_section */
+                $current_section = $path[array_key_last($path)];
+                $title = $current_section->name;
+                $page_title = $current_section->name;
+            }
+        }
+
+        $blog_sections = (new BlogSection())->orWhereNull('parent')->get();
+
+        if ($current_section !== null) {
+            $sections = (new BlogSection())->where('parent', $current_section->id)->get();
+        } else {
+            $sections = $blog_sections;
+        }
+
+        $this->render->addData(
+            [
+                'title'         => $title,
+                'page_title'    => $page_title,
+                'blog_sections' => $blog_sections,
+            ]
+        );
+        echo $this->render->render('blog::public/index', ['sections' => $sections]);
     }
 
     /**
