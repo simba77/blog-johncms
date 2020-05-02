@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Blog\Utils;
 
 use Blog\Models\BlogSection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Johncms\NavChain;
 
 class Helpers
@@ -36,5 +37,32 @@ class Helpers
                 $nav_chain->add($item['name'], $item['url']);
             }
         }
+    }
+
+    /**
+     * @param string $category
+     * @return array
+     */
+    public static function checkPath(string $category): array
+    {
+        $category = rtrim($category, '/');
+        $segments = explode('/', $category);
+        $path = [];
+        $parent = 0;
+        foreach ($segments as $item) {
+            try {
+                if (empty($parent)) {
+                    $check = (new BlogSection())->whereNull('parent')->where('code', $item)->firstOrFail();
+                } else {
+                    $check = (new BlogSection())->where('parent', $parent)->where('code', $item)->firstOrFail();
+                }
+                $path[] = $check;
+                $parent = $check->id;
+            } catch (ModelNotFoundException $exception) {
+                pageNotFound();
+            }
+        }
+
+        return $path;
     }
 }
