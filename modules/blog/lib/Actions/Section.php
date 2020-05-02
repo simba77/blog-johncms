@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Blog\Actions;
 
+use Blog\Models\BlogArticle;
 use Blog\Models\BlogSection;
 use Blog\Utils\AbstractAction;
 use Blog\Utils\Helpers;
@@ -36,22 +37,29 @@ class Section extends AbstractAction
             }
         }
 
-        $blog_sections = (new BlogSection())->orWhereNull('parent')->get();
-
         if ($current_section !== null) {
             $sections = (new BlogSection())->where('parent', $current_section->id)->get();
+            $articles = (new BlogArticle())->orderBy('id')->where('section_id', $current_section->id)->paginate($this->user->set_user->kmess);
         } else {
-            $sections = $blog_sections;
+            $sections = (new BlogSection())->orWhereNull('parent')->get();
+            $articles = (new BlogArticle())->orderBy('id')->paginate($this->user->set_user->kmess);
         }
 
         $this->render->addData(
             [
-                'title'         => $title,
-                'page_title'    => $page_title,
-                'blog_sections' => $blog_sections,
+                'title'      => $title,
+                'page_title' => $page_title,
             ]
         );
-        echo $this->render->render('blog::public/index', ['sections' => $sections]);
+
+        echo $this->render->render(
+            'blog::public/index',
+            [
+                'sections'        => $sections,
+                'articles'        => $articles,
+                'current_section' => $current_section,
+            ]
+        );
     }
 
     /**
