@@ -4,6 +4,7 @@ namespace Blog\Models;
 
 use Blog\Casts\FormattedDate;
 use Blog\Casts\SpecialChars;
+use Blog\Utils\SectionPathCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -23,6 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $updated_at - Дата изменения
  *
  * @property BlogSection $parentSection - Родительский раздел
+ * @property $url - Ссылка на страницу просмотра раздела
  */
 class BlogSection extends Model
 {
@@ -46,11 +48,31 @@ class BlogSection extends Model
         'updated_at'  => FormattedDate::class,
     ];
 
+    protected $appends = [
+        'url',
+    ];
+
     /**
      * @return HasOne
      */
     public function parentSection(): HasOne
     {
         return $this->hasOne(BlogSection::class, 'id', 'parent');
+    }
+
+    /**
+     * Returns the url of the section page
+     *
+     * @return string
+     */
+    public function getUrlAttribute(): string
+    {
+        $url = '';
+        if (! empty($this->parent)) {
+            /** @var SectionPathCache $cache */
+            $cache = di(SectionPathCache::class);
+            $url = $cache->getSectionPath($this->parent) . '/';
+        }
+        return '/blog/' . $url . $this->code . '/';
     }
 }
