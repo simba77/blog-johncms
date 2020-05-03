@@ -78,11 +78,11 @@
                     </div>
                     <div class="form-group">
                         <label for="preview_text"><?= __('Preview text') ?></label>
-                        <textarea id="preview_text" class="form-control" name="preview_text"><?= $this->e($data['fields']['preview_text']) ?></textarea>
+                        <textarea id="preview_text" class="form-control preview_text_editor" name="preview_text"><?= $this->e($data['fields']['preview_text']) ?></textarea>
                     </div>
                     <div class="form-group">
                         <label for="text"><?= __('Text') ?></label>
-                        <textarea id="text" class="form-control" name="text"><?= $this->e($data['fields']['text']) ?></textarea>
+                        <textarea id="text" class="form-control editor" name="text"><?= $this->e($data['fields']['text']) ?></textarea>
                     </div>
                     <div>
                         <button type="submit" class="btn btn-primary"><?= __('Save') ?></button>
@@ -93,3 +93,152 @@
         </div>
     </div>
 </div>
+
+<?php $this->push('scripts') ?>
+<script src="<?= $this->asset('blog/ckeditor5/ckeditor.js') ?>"></script>
+<script>
+    var ckeditor_settings = {
+        toolbar: {
+            items: [
+                'heading',
+                '|',
+                'bold',
+                'italic',
+                'link',
+                'bulletedList',
+                'numberedList',
+                'removeFormat',
+                '|',
+                'indent',
+                'outdent',
+                '|',
+                'imageUpload',
+                'CKFinder',
+                'blockQuote',
+                'insertTable',
+                'mediaEmbed',
+                'undo',
+                'redo'
+            ]
+        },
+        language: 'en',
+        image: {
+            toolbar: [
+                'imageTextAlternative',
+                'imageStyle:full',
+                'imageStyle:side'
+            ]
+        },
+        table: {
+            contentToolbar: [
+                'tableColumn',
+                'tableRow',
+                'mergeTableCells'
+            ]
+        },
+        heading: {
+            options: [
+                {model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph'},
+                {model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1'},
+                {model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2'},
+                {
+                    model: 'alertSuccess',
+                    view: {
+                        name: 'div',
+                        classes: ['alert', 'alert-success']
+                    },
+                    title: 'alert-success',
+                    class: 'alert alert-success',
+                },
+                {
+                    model: 'alertSuccessInline',
+                    view: {
+                        name: 'div',
+                        classes: ['alert', 'alert-success', 'd-inline-block']
+                    },
+                    title: 'alert-success inline',
+                    class: 'alert alert-success',
+                },
+                {
+                    model: 'alertInfo',
+                    view: {
+                        name: 'div',
+                        classes: ['alert', 'alert-info']
+                    },
+                    title: 'alert-success',
+                    class: 'alert alert-success',
+                },
+                {
+                    model: 'alertInfoInline',
+                    view: {
+                        name: 'div',
+                        classes: ['alert', 'alert-info', 'd-inline-block']
+                    },
+                    title: 'alert-info inline',
+                    class: 'alert alert-success',
+                },
+                {
+                    model: 'alertDanger',
+                    view: {
+                        name: 'div',
+                        classes: ['alert', 'alert-danger']
+                    },
+                    title: 'alert-danger',
+                    class: 'alert alert-danger',
+                },
+                {
+                    model: 'alertDangerInline',
+                    view: {
+                        name: 'div',
+                        classes: ['alert', 'alert-danger', 'd-inline-block']
+                    },
+                    title: 'alert-danger inline',
+                    class: 'alert alert-danger',
+                },
+                {
+                    model: 'alertWarning',
+                    view: {
+                        name: 'div',
+                        classes: ['alert', 'alert-warning']
+                    },
+                    title: 'alert-warning',
+                    class: 'alert alert-warning',
+                },
+                {
+                    model: 'alertWarningInline',
+                    view: {
+                        name: 'div',
+                        classes: ['alert', 'alert-warning', 'd-inline-block']
+                    },
+                    title: 'alert-warning inline',
+                    class: 'alert alert-warning',
+                },
+            ]
+        },
+        licenseKey: '',
+    };
+
+    ClassicEditor
+        .create(document.querySelector('.editor'), ckeditor_settings)
+        .then(editor => {
+            window.editor = editor;
+        })
+        .catch(error => {
+            console.error('Oops, something gone wrong!');
+            console.error('Please, report the following error in the https://github.com/ckeditor/ckeditor5 with the build id and the error stack trace:');
+            console.warn('Build id: qp6n69vt1ll0-4nwyh46tny70');
+            console.error(error);
+        });
+    ClassicEditor
+        .create(document.querySelector('.preview_text_editor'), ckeditor_settings)
+        .then(editor => {
+            window.editor = editor;
+        })
+        .catch(error => {
+            console.error('Oops, something gone wrong!');
+            console.error('Please, report the following error in the https://github.com/ckeditor/ckeditor5 with the build id and the error stack trace:');
+            console.warn('Build id: qp6n69vt1ll0-4nwyh46tny70');
+            console.error(error);
+        });
+</script>
+<?php $this->stop(); ?>
