@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $code - Символьный код
  * @property $preview_text - Краткое описание статьи в списке
  * @property $text - Текст с описанием
+ * @property $view_count - Количество просмотров
  * @property $keywords - Ключевые слова
  * @property $description - Описание
  * @property $created_at - Дата создания
@@ -50,6 +51,7 @@ class BlogArticle extends Model
 
     protected $casts = [
         'parent'      => 'integer',
+        'view_count'  => 'integer',
         'name'        => SpecialChars::class,
         'page_title'  => SpecialChars::class,
         'keywords'    => SpecialChars::class,

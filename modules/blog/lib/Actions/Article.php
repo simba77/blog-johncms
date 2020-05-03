@@ -14,6 +14,58 @@ use Illuminate\Support\Str;
 class Article extends AbstractAction
 {
     /**
+     * Article page
+     */
+    public function index(): void
+    {
+        $route = $this->route;
+        $current_section = null;
+        if (! empty($route['category'])) {
+            $path = Helpers::checkPath($route['category']);
+            if (! empty($path)) {
+                foreach ($path as $item) {
+                    /** @var $item BlogSection */
+                    $this->nav_chain->add($item->name, $item->url);
+                }
+                /** @var BlogSection $current_section */
+                $current_section = $path[array_key_last($path)];
+            }
+        }
+
+        try {
+            $article = (new BlogArticle())->where('code', $route['article'])->firstOrFail();
+        } catch (ModelNotFoundException $exception) {
+            pageNotFound();
+        }
+
+        // Фиксируем количество просмотров
+        if (empty($_SESSION['blog_viewed_articles']) || ! in_array($article->id, $_SESSION['blog_viewed_articles'], true)) {
+            ++$article->view_count;
+            $article->save();
+            $_SESSION['blog_viewed_articles'][] = $article->id;
+        }
+
+        $page_title = $article->name;
+        $title = $article->page_title;
+        $this->nav_chain->add($page_title, '/blog/');
+
+        $this->render->addData(
+            [
+                'title'      => $title,
+                'page_title' => $page_title,
+            ]
+        );
+
+        echo $this->render->render(
+            'blog::public/article',
+            [
+                'article'         => $article,
+                'current_section' => $current_section,
+            ]
+        );
+    }
+
+    /**
      * Article creation page
      */
     public function add(): void
