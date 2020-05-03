@@ -106,7 +106,7 @@ class Article extends AbstractAction
                 'code'         => $this->request->getPost('code', '', FILTER_SANITIZE_STRING),
                 'keywords'     => $this->request->getPost('keywords', '', FILTER_SANITIZE_STRING),
                 'description'  => $this->request->getPost('description', '', FILTER_SANITIZE_STRING),
-                'preview_text' => $this->request->getPost('preview_text', '', FILTER_SANITIZE_STRING),
+                'preview_text' => $this->request->getPost('preview_text', ''),
                 'text'         => $this->request->getPost('text', ''),
             ],
         ];
@@ -190,7 +190,7 @@ class Article extends AbstractAction
                 'code'         => $this->request->getPost('code', $article->code, FILTER_SANITIZE_STRING),
                 'keywords'     => $this->request->getPost('keywords', $article->keywords, FILTER_SANITIZE_STRING),
                 'description'  => $this->request->getPost('description', $article->description, FILTER_SANITIZE_STRING),
-                'preview_text' => $this->request->getPost('preview_text', $article->preview_text, FILTER_SANITIZE_STRING),
+                'preview_text' => $this->request->getPost('preview_text', $article->preview_text),
                 'text'         => $this->request->getPost('text', $article->text),
             ],
         ];
