@@ -8,6 +8,7 @@ use Blog\Models\BlogArticle;
 use Blog\Models\BlogSection;
 use Blog\Utils\AbstractAction;
 use Blog\Utils\Helpers;
+use Blog\Utils\Subsections;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 
@@ -39,7 +40,13 @@ class Section extends AbstractAction
 
         if ($current_section !== null) {
             $sections = (new BlogSection())->where('parent', $current_section->id)->get();
-            $articles = (new BlogArticle())->orderBy('id')->where('section_id', $current_section->id)->paginate($this->user->set_user->kmess);
+
+            // Get all articles in the current section with subsections
+            /** @var Subsections $subsections */
+            $subsections = di(Subsections::class);
+            $ids = $subsections->getIds($current_section);
+            $ids[] = $current_section->id;
+            $articles = (new BlogArticle())->orderBy('id')->whereIn('section_id', $ids)->paginate($this->user->set_user->kmess);
         } else {
             $sections = (new BlogSection())->orWhereNull('parent')->get();
             $articles = (new BlogArticle())->orderBy('id')->paginate($this->user->set_user->kmess);

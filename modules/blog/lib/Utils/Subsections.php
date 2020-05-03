@@ -1,0 +1,79 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Blog\Utils;
+
+use Blog\Models\BlogSection;
+use Psr\Container\ContainerInterface;
+
+class Subsections
+{
+    protected $cache = [];
+    private $cache_updated = false;
+    private $cache_file = DATA_PATH . 'cache/blog_subsections_cache.php';
+
+    public function __invoke(ContainerInterface $container): self
+    {
+        return $this;
+    }
+
+    /**
+     * Gets data from the cache
+     */
+    private function loadCache(): void
+    {
+        if (empty($this->cache) && file_exists($this->cache_file)) {
+            $this->cache = require $this->cache_file;
+        }
+    }
+
+    /**
+     * Gets subsections
+     *
+     * @param BlogSection $section
+     * @return array
+     */
+    public function getIds(BlogSection $section): array
+    {
+        $this->loadCache();
+        if (array_key_exists($section->id, $this->cache)) {
+            return $this->cache[$section->id];
+        }
+
+        $ids = $this->getSubsections($section->childSections);
+
+        $this->cache[$section->id] = $ids;
+        $this->cache_updated = true;
+        return $ids;
+    }
+
+    /**
+     * Recursively getting subsections.
+     *
+     * @param $subsections
+     * @return array
+     */
+    private function getSubsections($subsections): array
+    {
+        $ids = [];
+        foreach ($subsections as $subsection) {
+            /** @var $subsection BlogSection */
+            $ids[] = $subsection->id;
+            $ids = array_merge($ids, $this->getSubsections($subsection->childSections));
+        }
+
+        return $ids;
+    }
+
+    /**
+     * Updates the cache file
+     */
+    public function __destruct()
+    {
+        if ($this->cache_updated) {
+            $cache_data = "<?php\n\n" . 'return ' . var_export($this->cache, true) . ";\n";
+            file_put_contents($this->cache_file, $cache_data);
+        }
+    }
+}

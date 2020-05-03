@@ -7,6 +7,7 @@ use Blog\Casts\SpecialChars;
 use Blog\Utils\SectionPathCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -24,6 +25,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $updated_at - Дата изменения
  *
  * @property BlogSection $parentSection - Родительский раздел
+ * @property BlogSection $childSections - Дочерние раздел
  * @property $url - Ссылка на страницу просмотра раздела
  */
 class BlogSection extends Model
@@ -57,7 +59,15 @@ class BlogSection extends Model
      */
     public function parentSection(): HasOne
     {
-        return $this->hasOne(BlogSection::class, 'id', 'parent');
+        return $this->hasOne(__CLASS__, 'id', 'parent');
+    }
+
+    /**
+     * @return HasMany
+     */
+    public function childSections(): HasMany
+    {
+        return $this->hasMany(__CLASS__, 'parent', 'id');
     }
 
     /**
