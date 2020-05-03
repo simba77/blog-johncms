@@ -77,6 +77,10 @@
                         >
                     </div>
                     <div class="form-group">
+                        <label for="preview_text"><?= __('Preview text') ?></label>
+                        <textarea id="preview_text" class="form-control" name="preview_text"><?= $this->e($data['fields']['preview_text']) ?></textarea>
+                    </div>
+                    <div class="form-group">
                         <label for="text"><?= __('Text') ?></label>
                         <textarea id="text" class="form-control" name="text"><?= $this->e($data['fields']['text']) ?></textarea>
                     </div>

@@ -48,13 +48,14 @@ class Article extends AbstractAction
             'back_url'   => '/blog/admin/content/?section_id=' . $section_id,
             'section_id' => $section_id,
             'fields'     => [
-                'section_id'  => $section_id,
-                'name'        => $this->request->getPost('name', '', FILTER_SANITIZE_STRING),
-                'page_title'  => $this->request->getPost('page_title', '', FILTER_SANITIZE_STRING),
-                'code'        => $this->request->getPost('code', '', FILTER_SANITIZE_STRING),
-                'keywords'    => $this->request->getPost('keywords', '', FILTER_SANITIZE_STRING),
-                'description' => $this->request->getPost('description', '', FILTER_SANITIZE_STRING),
-                'text'        => $this->request->getPost('text', ''),
+                'section_id'   => $section_id,
+                'name'         => $this->request->getPost('name', '', FILTER_SANITIZE_STRING),
+                'page_title'   => $this->request->getPost('page_title', '', FILTER_SANITIZE_STRING),
+                'code'         => $this->request->getPost('code', '', FILTER_SANITIZE_STRING),
+                'keywords'     => $this->request->getPost('keywords', '', FILTER_SANITIZE_STRING),
+                'description'  => $this->request->getPost('description', '', FILTER_SANITIZE_STRING),
+                'preview_text' => $this->request->getPost('preview_text', '', FILTER_SANITIZE_STRING),
+                'text'         => $this->request->getPost('text', ''),
             ],
         ];
 
@@ -132,12 +133,13 @@ class Article extends AbstractAction
             'back_url'   => '/blog/admin/content/?section_id=' . $article->section_id,
             'article_id' => $article_id,
             'fields'     => [
-                'name'        => $this->request->getPost('name', $article->name, FILTER_SANITIZE_STRING),
-                'page_title'  => $this->request->getPost('page_title', $article->page_title, FILTER_SANITIZE_STRING),
-                'code'        => $this->request->getPost('code', $article->code, FILTER_SANITIZE_STRING),
-                'keywords'    => $this->request->getPost('keywords', $article->keywords, FILTER_SANITIZE_STRING),
-                'description' => $this->request->getPost('description', $article->description, FILTER_SANITIZE_STRING),
-                'text'        => $this->request->getPost('text', $article->text),
+                'name'         => $this->request->getPost('name', $article->name, FILTER_SANITIZE_STRING),
+                'page_title'   => $this->request->getPost('page_title', $article->page_title, FILTER_SANITIZE_STRING),
+                'code'         => $this->request->getPost('code', $article->code, FILTER_SANITIZE_STRING),
+                'keywords'     => $this->request->getPost('keywords', $article->keywords, FILTER_SANITIZE_STRING),
+                'description'  => $this->request->getPost('description', $article->description, FILTER_SANITIZE_STRING),
+                'preview_text' => $this->request->getPost('preview_text', $article->preview_text, FILTER_SANITIZE_STRING),
+                'text'         => $this->request->getPost('text', $article->text),
             ],
         ];
 
