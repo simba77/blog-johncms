@@ -3,20 +3,27 @@
 /**
  * @var $title
  * @var $page_title
- * @var $data
  * @var $current_section
+ * @var $user
+ * @var $articles Illuminate\Contracts\Pagination\LengthAwarePaginator
+ * @var $sections \Blog\Models\BlogSection
  */
 
 $this->layout('system::layout/default');
 ?>
-
+<?php if ($user->rights >= 9): ?>
+    <div class="mb-3 mt-n1">
+        <a href="/blog/admin/" class="btn btn-outline-danger btn-sm"><?= __('Admin panel') ?></a>
+    </div>
+<?php endif ?>
 <div class="row">
     <div class="col-12 col-xl-9">
         <?php if ($articles->count() > 0): ?>
             <?php foreach ($articles as $article): ?>
+                <?php /** @var $article \Blog\Models\BlogArticle */ ?>
                 <div class="card border-0 mb-2 shadow">
                     <div class="card-body">
-                        <h3 class="card-title"><a href="<?= $article->code ?>"><?= $article->name ?></a></h3>
+                        <h3 class="card-title"><a href="<?= $article->url ?>"><?= $article->name ?></a></h3>
                         <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                     </div>
                 </div>
@@ -24,6 +31,8 @@ $this->layout('system::layout/default');
             <div class="mt-3">
                 <?= $articles->render() ?>
             </div>
+        <?php else: ?>
+            <div class="alert alert-info"><?= __('The list is empty') ?></div>
         <?php endif; ?>
     </div>
     <div class="col-12 col-xl-3">
@@ -31,6 +40,7 @@ $this->layout('system::layout/default');
             <h3 class="pl-3"><?= __('Categories') ?></h3>
             <nav class="nav flex-column">
                 <?php foreach ($sections as $section): ?>
+                    <?php /** @var $section \Blog\Models\BlogSection */ ?>
                     <a class="nav-link" href="<?= $section->url ?>"><?= $section->name ?></a>
                 <?php endforeach; ?>
             </nav>

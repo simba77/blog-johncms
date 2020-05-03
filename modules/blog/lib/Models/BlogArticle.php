@@ -4,6 +4,7 @@ namespace Blog\Models;
 
 use Blog\Casts\FormattedDate;
 use Blog\Casts\SpecialChars;
+use Blog\Utils\SectionPathCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -26,6 +27,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $updated_by - Пользователь, изменивший запись
  *
  * @property BlogSection $parentSection - Родительский раздел
+ * @property $url - URL адрес страницы просмотра статьи
  */
 class BlogArticle extends Model
 {
@@ -60,5 +62,21 @@ class BlogArticle extends Model
     public function parentSection(): HasOne
     {
         return $this->hasOne(BlogSection::class, 'id', 'section_id');
+    }
+
+    /**
+     * Returns the url of the section page
+     *
+     * @return string
+     */
+    public function getUrlAttribute(): string
+    {
+        $url = '';
+        if (! empty($this->section_id)) {
+            /** @var SectionPathCache $cache */
+            $cache = di(SectionPathCache::class);
+            $url = $cache->getSectionPath($this->section_id) . '/';
+        }
+        return '/blog/' . $url . $this->code . '.html';
     }
 }
