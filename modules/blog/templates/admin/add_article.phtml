@@ -95,6 +95,9 @@
 </div>
 
 <?php $this->push('scripts') ?>
+<?php if ($locale !== 'en'): ?>
+    <script src="<?= $this->asset('blog/ckeditor5/translations/' . $locale . '.js') ?>"></script>
+<?php endif; ?>
 <script src="<?= $this->asset('blog/ckeditor5/ckeditor.js') ?>"></script>
 <script>
     var ckeditor_settings = {
@@ -121,7 +124,7 @@
                 'redo'
             ]
         },
-        language: 'en',
+        language: '<?= $locale ?>',
         image: {
             toolbar: [
                 'imageTextAlternative',
@@ -165,7 +168,7 @@
                         name: 'div',
                         classes: ['alert', 'alert-info']
                     },
-                    title: 'alert-success',
+                    title: 'alert-info',
                     class: 'alert alert-success',
                 },
                 {
