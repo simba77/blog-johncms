@@ -28,6 +28,7 @@ Capsule::Schema()->create(
         $table->string('code')->index();
         $table->text('keywords')->nullable();
         $table->text('description')->nullable();
+        $table->text('preview_text')->nullable();
         $table->longText('text');
         $table->integer('view_count')->nullable();
         $table->integer('created_by')->nullable();

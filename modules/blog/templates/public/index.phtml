@@ -23,8 +23,10 @@ $this->layout('system::layout/default');
                 <?php /** @var $article \Blog\Models\BlogArticle */ ?>
                 <div class="card border-0 mb-2 shadow">
                     <div class="card-body">
-                        <h3 class="card-title"><a href="<?= $article->url ?>"><?= $article->name ?></a></h3>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                        <h3 class="card-title mb-0"><a href="<?= $article->url ?>"><?= $article->name ?></a></h3>
+                        <?php if ($article->preview_text): ?>
+                            <p class="card-text mt-2"><?= $article->preview_text ?></p>
+                        <?php endif ?>
                     </div>
                 </div>
             <?php endforeach; ?>

@@ -18,6 +18,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $name - Название
  * @property $page_title - Заголовок страницы
  * @property $code - Символьный код
+ * @property $preview_text - Краткое описание статьи в списке
  * @property $text - Текст с описанием
  * @property $keywords - Ключевые слова
  * @property $description - Описание
@@ -40,6 +41,7 @@ class BlogArticle extends Model
         'code',
         'keywords',
         'description',
+        'preview_text',
         'text',
         'view_count',
         'created_by',
