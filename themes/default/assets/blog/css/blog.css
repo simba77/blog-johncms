@@ -3,6 +3,10 @@
     height: 15px;
 }
 
+.p-no-margin p {
+    margin-bottom: 0;
+}
+
 figure.table table {
     border-collapse: collapse;
     border-spacing: 0;

@@ -76,11 +76,11 @@
                                placeholder="<?= __('Description') ?>"
                         >
                     </div>
-                    <div class="form-group">
+                    <div class="form-group p-no-margin">
                         <label for="preview_text"><?= __('Preview text') ?></label>
                         <textarea id="preview_text" class="form-control preview_text_editor" name="preview_text"><?= $this->e($data['fields']['preview_text']) ?></textarea>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group p-no-margin">
                         <label for="text"><?= __('Text') ?></label>
                         <textarea id="text" class="form-control editor" name="text"><?= $this->e($data['fields']['text']) ?></textarea>
                     </div>
@@ -261,4 +261,7 @@
             console.error(error);
         });
 </script>
+<?php $this->stop(); ?>
+<?php $this->push('styles') ?>
+    <link rel="stylesheet" href="<?= $this->asset('blog/css/blog.css', true) ?>">
 <?php $this->stop(); ?>
