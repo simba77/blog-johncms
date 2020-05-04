@@ -27,3 +27,7 @@ $this->layout('system::layout/default');
 <div class="mt-3">
     <a href="<?= $current_section->url ?>">Назад</a>
 </div>
+
+<?php $this->push('styles') ?>
+<link rel="stylesheet" href="<?= $this->asset('blog/css/blog.css', true) ?>">
+<?php $this->stop(); ?>
