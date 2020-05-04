@@ -27,3 +27,18 @@ figure.table td {
     border: 1px solid #bfbfbf;
     padding: .4em;
 }
+
+.p-no-margin blockquote {
+    overflow: hidden;
+    padding-right: 1.5em;
+    padding-left: 1.5em;
+    margin-left: 0;
+    margin-right: 0;
+    font-style: italic;
+    border-left: solid 5px hsl(0, 0%, 80%);
+}
+
+.p-no-margin[dir="rtl"] blockquote {
+    border-left: 0;
+    border-right: solid 5px hsl(0, 0%, 80%);
+}
