@@ -30,6 +30,7 @@ class HTMLPurifier
                 'language-xml',
                 'media',
                 'table',
+                'image',
             ]
         );
 
@@ -59,6 +60,13 @@ class HTMLPurifier
                 [ // attributes
                     'url' => 'URI',
                 ]
+            );
+            $def->addElement(
+                'figcaption',
+                'Block',
+                'Flow',
+                'Common',
+                []
             );
         }
 
