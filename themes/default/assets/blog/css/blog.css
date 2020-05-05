@@ -42,3 +42,31 @@ figure.table td {
     border-left: 0;
     border-right: solid 5px hsl(0, 0%, 80%);
 }
+
+.image {
+    display: table;
+    clear: both;
+    text-align: center;
+    margin: 1rem 0;
+    max-width: 100%;
+}
+
+.image img {
+    max-width: 100%;
+}
+
+.image > figcaption {
+    display: table-caption;
+    caption-side: bottom;
+    word-break: break-word;
+    color: #333;
+    background-color: #f7f7f7;
+    padding: .6em;
+    font-size: .75em;
+    outline-offset: -1px;
+}
+
+.image-style-side {
+    float: right;
+    margin-left: 1rem;
+}

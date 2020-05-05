@@ -31,6 +31,7 @@ class HTMLPurifier
                 'media',
                 'table',
                 'image',
+                'image-style-side',
             ]
         );
 
