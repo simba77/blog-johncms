@@ -90,6 +90,9 @@ class Admin extends AbstractAction
 
         if ($this->request->getMethod() === 'POST') {
             $config = [
+                'ckfinder_license_key'  => $this->request->getPost('ckfinder_license_key', '', FILTER_SANITIZE_STRING),
+                'ckfinder_license_name' => $this->request->getPost('ckfinder_license_name', '', FILTER_SANITIZE_STRING),
+
                 'title'            => $this->request->getPost('title', '', FILTER_SANITIZE_STRING),
                 'meta_keywords'    => $this->request->getPost('meta_keywords', '', FILTER_SANITIZE_STRING),
                 'meta_description' => $this->request->getPost('meta_description', '', FILTER_SANITIZE_STRING),
@@ -124,6 +127,9 @@ class Admin extends AbstractAction
 
         // Стандартные настройки
         $default_settings = [
+            'ckfinder_license_key'  => '',
+            'ckfinder_license_name' => '',
+
             'title'            => '',
             'meta_keywords'    => '',
             'meta_description' => '',
