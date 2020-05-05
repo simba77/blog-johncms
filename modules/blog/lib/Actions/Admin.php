@@ -74,4 +74,73 @@ class Admin extends AbstractAction
         );
         echo $this->render->render('blog::admin/sections', ['data' => $data]);
     }
+
+    /**
+     * Страница настроек блога
+     */
+    public function settings(): void
+    {
+        $data = [
+            'title'       => __('Blog settings'),
+            'page_title'  => __('Blog settings'),
+            'back_url'    => '/blog/admin/',
+            'form_action' => '/blog/admin/settings/',
+            'message'     => '',
+        ];
+
+        if ($this->request->getMethod() === 'POST') {
+            $config = [
+                'title'            => $this->request->getPost('title', '', FILTER_SANITIZE_STRING),
+                'meta_keywords'    => $this->request->getPost('meta_keywords', '', FILTER_SANITIZE_STRING),
+                'meta_description' => $this->request->getPost('meta_description', '', FILTER_SANITIZE_STRING),
+
+                'section_title'            => $this->request->getPost('section_title', '', FILTER_SANITIZE_STRING),
+                'section_meta_keywords'    => $this->request->getPost('section_meta_keywords', '', FILTER_SANITIZE_STRING),
+                'section_meta_description' => $this->request->getPost('section_meta_description', '', FILTER_SANITIZE_STRING),
+
+                'article_title'            => $this->request->getPost('article_title', '', FILTER_SANITIZE_STRING),
+                'article_meta_keywords'    => $this->request->getPost('article_meta_keywords', '', FILTER_SANITIZE_STRING),
+                'article_meta_description' => $this->request->getPost('article_meta_description', '', FILTER_SANITIZE_STRING),
+            ];
+
+            $configFile = "<?php\n\n" . 'return ' . var_export(['blog' => $config], true) . ";\n";
+            if (! file_put_contents(CONFIG_PATH . 'autoload/blog.local.php', $configFile)) {
+                echo 'ERROR: Can not write blog.local.php';
+                exit;
+            }
+            if (function_exists('opcache_reset')) {
+                opcache_reset();
+            }
+
+            $_SESSION['message'] = __('Settings saved!');
+            header('Location: /blog/admin/settings/');
+            exit;
+        }
+
+        if (! empty($_SESSION['message'])) {
+            $data['message'] = htmlspecialchars($_SESSION['message']);
+            unset($_SESSION['message']);
+        }
+
+        // Стандартные настройки
+        $default_settings = [
+            'title'            => '',
+            'meta_keywords'    => '',
+            'meta_description' => '',
+
+            'section_title'            => '',
+            'section_meta_keywords'    => '',
+            'section_meta_description' => '',
+
+            'article_title'            => '',
+            'article_meta_keywords'    => '',
+            'article_meta_description' => '',
+        ];
+
+        $config = di('config')['blog'] ?? [];
+        $data['current_settings'] = array_merge($default_settings, $config);
+
+        // Выводим шаблон настроек уведомлений
+        echo $this->render->render('blog::admin/settings', ['data' => $data]);
+    }
 }

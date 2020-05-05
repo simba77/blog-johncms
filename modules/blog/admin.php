@@ -62,6 +62,11 @@ if ($user->rights >= 9) {
             (new Admin())->section();
             break;
 
+        // Настройки
+        case 'settings':
+            (new Admin())->settings();
+            break;
+
         // Страница добавления раздела
         case 'add_section':
             (new Section())->add();
