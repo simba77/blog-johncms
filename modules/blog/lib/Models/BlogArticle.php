@@ -33,6 +33,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  * @property BlogSection $parentSection - Родительский раздел
  * @property $url - URL адрес страницы просмотра статьи
+ * @property $meta_title
+ * @property $meta_keywords
+ * @property $meta_description
  */
 class BlogArticle extends Model
 {
@@ -105,5 +108,47 @@ class BlogArticle extends Model
     public function getPreviewTextSafeAttribute(): string
     {
         return Helpers::purifyHtml($this->preview_text);
+    }
+
+    /**
+     * Meta title
+     *
+     * @return string|string[]
+     */
+    public function getMetaTitleAttribute()
+    {
+        if (! empty($this->page_title)) {
+            return $this->page_title;
+        }
+        $config = di('config')['blog'];
+        return ! empty($config['article_title']) ? str_replace('#article_name#', $this->name, $config['article_title']) : $this->name;
+    }
+
+    /**
+     * Meta keywords
+     *
+     * @return string|string[]
+     */
+    public function getMetaKeywordsAttribute()
+    {
+        if (! empty($this->keywords)) {
+            return $this->keywords;
+        }
+        $config = di('config')['blog'];
+        return str_replace('#article_name#', $this->name, $config['article_meta_keywords']);
+    }
+
+    /**
+     * Meta description
+     *
+     * @return string|string[]
+     */
+    public function getMetaDescriptionAttribute()
+    {
+        if (! empty($this->description)) {
+            return $this->description;
+        }
+        $config = di('config')['blog'];
+        return str_replace('#article_name#', $this->name, $config['article_meta_description']);
     }
 }

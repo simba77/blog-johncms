@@ -46,13 +46,14 @@ class Article extends AbstractAction
         }
 
         $page_title = $article->name;
-        $title = $article->page_title;
         $this->nav_chain->add($page_title, $article->url);
 
         $this->render->addData(
             [
-                'title'      => $title,
-                'page_title' => $page_title,
+                'title'       => $article->meta_title,
+                'page_title'  => $page_title,
+                'keywords'    => $article->meta_keywords,
+                'description' => $article->meta_description,
             ]
         );
 
