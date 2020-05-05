@@ -65,4 +65,15 @@ class Helpers
 
         return $path;
     }
+
+    /**
+     * @param $html
+     * @return string
+     */
+    public static function purifyHtml($html): string
+    {
+        /** @var \HTMLPurifier $purifier */
+        $purifier = di(HTMLPurifier::class);
+        return $purifier->purify($html);
+    }
 }

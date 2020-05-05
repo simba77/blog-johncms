@@ -4,6 +4,7 @@ namespace Blog\Models;
 
 use Blog\Casts\FormattedDate;
 use Blog\Casts\SpecialChars;
+use Blog\Utils\Helpers;
 use Blog\Utils\SectionPathCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -19,7 +20,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $page_title - Заголовок страницы
  * @property $code - Символьный код
  * @property $preview_text - Краткое описание статьи в списке
+ * @property $preview_text_safe - Краткое описание статьи в списке в безопасном виде
  * @property $text - Текст с описанием
+ * @property $text_safe - Текст с описанием в безопасном виде
  * @property $view_count - Количество просмотров
  * @property $keywords - Ключевые слова
  * @property $description - Описание
@@ -82,5 +85,25 @@ class BlogArticle extends Model
             $url = $cache->getSectionPath($this->section_id) . '/';
         }
         return '/blog/' . $url . $this->code . '.html';
+    }
+
+    /**
+     * Returns the url of the section page
+     *
+     * @return string
+     */
+    public function getTextSafeAttribute(): string
+    {
+        return Helpers::purifyHtml($this->text);
+    }
+
+    /**
+     * Returns the url of the section page
+     *
+     * @return string
+     */
+    public function getPreviewTextSafeAttribute(): string
+    {
+        return Helpers::purifyHtml($this->preview_text);
     }
 }

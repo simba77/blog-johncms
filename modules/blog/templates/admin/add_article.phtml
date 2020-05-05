@@ -244,9 +244,6 @@
             window.editor = editor;
         })
         .catch(error => {
-            console.error('Oops, something gone wrong!');
-            console.error('Please, report the following error in the https://github.com/ckeditor/ckeditor5 with the build id and the error stack trace:');
-            console.warn('Build id: qp6n69vt1ll0-4nwyh46tny70');
             console.error(error);
         });
     ClassicEditor
@@ -255,13 +252,10 @@
             window.editor = editor;
         })
         .catch(error => {
-            console.error('Oops, something gone wrong!');
-            console.error('Please, report the following error in the https://github.com/ckeditor/ckeditor5 with the build id and the error stack trace:');
-            console.warn('Build id: qp6n69vt1ll0-4nwyh46tny70');
             console.error(error);
         });
 </script>
 <?php $this->stop(); ?>
 <?php $this->push('styles') ?>
-    <link rel="stylesheet" href="<?= $this->asset('blog/css/blog.css', true) ?>">
+<link rel="stylesheet" href="<?= $this->asset('blog/css/blog.css', true) ?>">
 <?php $this->stop(); ?>

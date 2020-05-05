@@ -24,8 +24,8 @@ $this->layout('system::layout/default');
                 <div class="card border-0 mb-2 shadow">
                     <div class="card-body">
                         <h3 class="card-title mb-0"><a href="<?= $article->url ?>"><?= $article->name ?></a></h3>
-                        <?php if ($article->preview_text): ?>
-                            <p class="card-text mt-2"><?= $article->preview_text ?></p>
+                        <?php if ($article->preview_text_safe): ?>
+                            <p class="card-text mt-2"><?= $article->preview_text_safe ?></p>
                         <?php endif ?>
                     </div>
                 </div>

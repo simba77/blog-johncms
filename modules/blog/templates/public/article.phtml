@@ -10,7 +10,7 @@ $this->layout('system::layout/default');
 
 ?>
 <div class="p-no-margin">
-    <?= $article->text ?>
+    <?= $article->text_safe ?>
 </div>
 
 <?php if ($article->view_count): ?>

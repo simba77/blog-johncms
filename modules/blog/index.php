@@ -9,6 +9,8 @@ use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
 use Johncms\Users\User;
 
+require_once __DIR__ . '/lib/HTMLPurifier/HTMLPurifier.auto.php';
+
 /** @var Render $view */
 $view = di(Render::class);
 
