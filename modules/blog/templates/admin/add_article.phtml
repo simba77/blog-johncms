@@ -99,10 +99,14 @@
     <script src="<?= $this->asset('blog/ckeditor5/translations/' . $locale . '.js') ?>"></script>
 <?php endif; ?>
 <script src="<?= $this->asset('blog/ckeditor5/ckeditor.js') ?>"></script>
+<script src="/modules/blog/ckfinder/ckfinder.js"></script>
 <script>
     // Disable prism
     Prism.manual = true;
     var ckeditor_settings = {
+        ckfinder: {
+            uploadUrl: '/modules/blog/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json'
+        },
         toolbar: {
             items: [
                 'heading',
