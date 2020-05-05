@@ -32,6 +32,9 @@ abstract class AbstractAction
     /** @var array Параметры маршрута */
     protected $route = [];
 
+    /** @var array|mixed Настройки блога */
+    protected $settings = [];
+
     public function __construct()
     {
         $this->nav_chain = di(NavChain::class);
@@ -40,6 +43,7 @@ abstract class AbstractAction
         $this->user = di(User::class);
         $this->module_name = 'Блог';
         $this->base_url = '/blog/';
-        $this->route = di('route');;
+        $this->route = di('route');
+        $this->settings = di('config')['blog'] ?? [];
     }
 }

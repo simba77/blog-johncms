@@ -33,8 +33,10 @@ class Section extends AbstractAction
                 }
                 /** @var BlogSection $current_section */
                 $current_section = $path[array_key_last($path)];
-                $title = $current_section->name;
+                $title = $current_section->meta_title;
                 $page_title = $current_section->name;
+                $keywords = $current_section->meta_keywords;
+                $description = $current_section->meta_description;
             }
         }
 
@@ -50,12 +52,18 @@ class Section extends AbstractAction
         } else {
             $sections = (new BlogSection())->orWhereNull('parent')->get();
             $articles = (new BlogArticle())->orderBy('id')->paginate($this->user->set_user->kmess);
+            $title = $this->settings['title'];
+            $page_title = $this->settings['title'];
+            $keywords = $this->settings['meta_keywords'];
+            $description = $this->settings['meta_description'];
         }
 
         $this->render->addData(
             [
-                'title'      => $title,
-                'page_title' => $page_title,
+                'title'       => $title,
+                'page_title'  => $page_title,
+                'keywords'    => $keywords ?? '',
+                'description' => $description ?? '',
             ]
         );
 

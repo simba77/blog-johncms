@@ -27,6 +27,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property BlogSection $parentSection - Родительский раздел
  * @property BlogSection $childSections - Дочерние раздел
  * @property $url - Ссылка на страницу просмотра раздела
+ * @property $meta_title
+ * @property $meta_keywords
+ * @property $meta_description
  */
 class BlogSection extends Model
 {
@@ -84,5 +87,44 @@ class BlogSection extends Model
             $url = $cache->getSectionPath($this->parent) . '/';
         }
         return '/blog/' . $url . $this->code . '/';
+    }
+
+    /**
+     * Meta title
+     *
+     * @return string|string[]
+     */
+    public function getMetaTitleAttribute()
+    {
+        $config = di('config')['blog'];
+        return ! empty($config['section_title']) ? str_replace('#section_name#', $this->name, $config['section_title']) : $this->name;
+    }
+
+    /**
+     * Meta keywords
+     *
+     * @return string|string[]
+     */
+    public function getMetaKeywordsAttribute()
+    {
+        if (! empty($this->keywords)) {
+            return $this->keywords;
+        }
+        $config = di('config')['blog'];
+        return str_replace('#section_name#', $this->name, $config['section_meta_keywords']);
+    }
+
+    /**
+     * Meta description
+     *
+     * @return string|string[]
+     */
+    public function getMetaDescriptionAttribute()
+    {
+        if (! empty($this->description)) {
+            return $this->description;
+        }
+        $config = di('config')['blog'];
+        return str_replace('#section_name#', $this->name, $config['section_meta_description']);
     }
 }
