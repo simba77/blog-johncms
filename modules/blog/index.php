@@ -4,29 +4,14 @@ declare(strict_types=1);
 
 use Blog\Actions\Article;
 use Blog\Actions\Section;
-use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\View\Render;
-use Johncms\Users\User;
+use Johncms\System\i18n\Translator;
 
 require_once __DIR__ . '/lib/HTMLPurifier/HTMLPurifier.auto.php';
 
-/** @var Render $view */
-$view = di(Render::class);
-
-/** @var Request $request */
-$request = di(Request::class);
-
-/** @var NavChain $nav_chain */
-$nav_chain = di(NavChain::class);
-
-/** @var User $user */
-$user = di(User::class);
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('blog', __DIR__ . '/locale');
 
 $route = di('route');
-
-// Register Namespace for module templates
-$view->addFolder('blog', __DIR__ . '/templates/');
 
 $loader = new Aura\Autoload\Loader();
 $loader->register();

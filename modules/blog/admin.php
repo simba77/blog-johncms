@@ -6,15 +6,8 @@ use Blog\Actions\Admin;
 use Blog\Actions\Article;
 use Blog\Actions\Section;
 use Johncms\NavChain;
-use Johncms\System\Http\Request;
-use Johncms\System\View\Render;
+use Johncms\System\i18n\Translator;
 use Johncms\Users\User;
-
-/** @var Render $view */
-$view = di(Render::class);
-
-/** @var Request $request */
-$request = di(Request::class);
 
 /** @var NavChain $nav_chain */
 $nav_chain = di(NavChain::class);
@@ -24,8 +17,8 @@ $user = di(User::class);
 
 $route = di('route');
 
-// Register Namespace for module templates
-$view->addFolder('blog', __DIR__ . '/templates/');
+// Register the module languages domain and folder
+di(Translator::class)->addTranslationDomain('blog', __DIR__ . '/locale');
 
 $loader = new Aura\Autoload\Loader();
 $loader->register();

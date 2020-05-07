@@ -45,5 +45,8 @@ abstract class AbstractAction
         $this->base_url = '/blog/';
         $this->route = di('route');
         $this->settings = di('config')['blog'] ?? [];
+
+        // Register Namespace for module templates
+        $this->render->addFolder('blog', ROOT_PATH . '/modules/blog/templates/');
     }
 }
