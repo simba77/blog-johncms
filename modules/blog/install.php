@@ -46,4 +46,11 @@ Capsule::Schema()->create(
     }
 );
 
-echo 'Установка выполнена!';
+echo $view->render(
+    'system::pages/result',
+    [
+        'title'   => __('Blog'),
+        'type'    => 'alert-danger',
+        'message' => __('The module was installed successfully'),
+    ]
+);

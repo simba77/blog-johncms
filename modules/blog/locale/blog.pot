@@ -1,0 +1,291 @@
+msgid ""
+msgstr ""
+"X-Domain: blog\n"
+
+#: modules/blog/admin.php:30
+#: modules/blog/install.php:52
+#: modules/blog/lib/Actions/Section.php:25
+#: modules/blog/lib/Actions/Section.php:26
+msgid "Blog"
+msgstr ""
+
+#: modules/blog/admin.php:31
+#: modules/blog/lib/Actions/Admin.php:22
+#: modules/blog/lib/Actions/Admin.php:23
+#: modules/blog/templates/public/index.phtml:16
+msgid "Admin panel"
+msgstr ""
+
+#: modules/blog/install.php:54
+msgid "The module was installed successfully"
+msgstr ""
+
+#: modules/blog/lib/Actions/Admin.php:35
+#: modules/blog/lib/Actions/Article.php:74
+#: modules/blog/lib/Actions/Article.php:166
+#: modules/blog/lib/Actions/Section.php:87
+#: modules/blog/lib/Actions/Section.php:177
+msgid "Section list"
+msgstr ""
+
+#: modules/blog/lib/Actions/Admin.php:84
+#: modules/blog/lib/Actions/Admin.php:85
+#: modules/blog/templates/admin/index.phtml:24
+msgid "Blog settings"
+msgstr ""
+
+#: modules/blog/lib/Actions/Admin.php:118
+msgid "Settings saved!"
+msgstr ""
+
+#: modules/blog/lib/Actions/Article.php:77
+#: modules/blog/lib/Actions/Article.php:78
+#: modules/blog/lib/Actions/Article.php:97
+#: modules/blog/templates/admin/sections.phtml:37
+msgid "Add article"
+msgstr ""
+
+#: modules/blog/lib/Actions/Article.php:121
+#: modules/blog/lib/Actions/Article.php:205
+msgid "The article name cannot be empty"
+msgstr ""
+
+#: modules/blog/lib/Actions/Article.php:148
+msgid "The article was created successfully"
+msgstr ""
+
+#: modules/blog/lib/Actions/Article.php:152
+#: modules/blog/lib/Actions/Article.php:229
+msgid "An article with this code already exists"
+msgstr ""
+
+#: modules/blog/lib/Actions/Article.php:169
+#: modules/blog/lib/Actions/Article.php:170
+msgid "Edit article"
+msgstr ""
+
+#: modules/blog/lib/Actions/Article.php:225
+msgid "The article was updated successfully"
+msgstr ""
+
+#: modules/blog/lib/Actions/Article.php:268
+msgid "The article was successfully deleted"
+msgstr ""
+
+#: modules/blog/lib/Actions/Section.php:90
+#: modules/blog/lib/Actions/Section.php:91
+#: modules/blog/lib/Actions/Section.php:110
+msgid "Create section"
+msgstr ""
+
+#: modules/blog/lib/Actions/Section.php:132
+#: modules/blog/lib/Actions/Section.php:215
+msgid "The section name cannot be empty"
+msgstr ""
+
+#: modules/blog/lib/Actions/Section.php:158
+msgid "The section was created successfully"
+msgstr ""
+
+#: modules/blog/lib/Actions/Section.php:162
+#: modules/blog/lib/Actions/Section.php:238
+msgid "A section with this code already exists"
+msgstr ""
+
+#: modules/blog/lib/Actions/Section.php:180
+#: modules/blog/lib/Actions/Section.php:181
+#: modules/blog/lib/Actions/Section.php:194
+msgid "Edit section"
+msgstr ""
+
+#: modules/blog/lib/Actions/Section.php:234
+msgid "The section was updated successfully"
+msgstr ""
+
+#: modules/blog/lib/Actions/Section.php:283
+msgid "The section was successfully deleted"
+msgstr ""
+
+#: modules/blog/templates/admin/add_article.phtml:22
+#: modules/blog/templates/admin/add_article.phtml:30
+msgid "Article name"
+msgstr ""
+
+#: modules/blog/templates/admin/add_article.phtml:34
+#: modules/blog/templates/admin/add_article.phtml:42
+msgid "Page title"
+msgstr ""
+
+#: modules/blog/templates/admin/add_article.phtml:46
+#: modules/blog/templates/admin/add_article.phtml:53
+msgid "Article code"
+msgstr ""
+
+#: modules/blog/templates/admin/add_article.phtml:55
+#: modules/blog/templates/admin/add_section.phtml:43
+msgid "Leave it empty for automatic generation"
+msgstr ""
+
+#: modules/blog/templates/admin/add_article.phtml:58
+#: modules/blog/templates/admin/add_article.phtml:65
+#: modules/blog/templates/admin/add_section.phtml:46
+#: modules/blog/templates/admin/add_section.phtml:53
+#: modules/blog/templates/admin/settings.phtml:72
+#: modules/blog/templates/admin/settings.phtml:79
+#: modules/blog/templates/admin/settings.phtml:100
+#: modules/blog/templates/admin/settings.phtml:107
+#: modules/blog/templates/admin/settings.phtml:130
+#: modules/blog/templates/admin/settings.phtml:137
+msgid "Keywords"
+msgstr ""
+
+#: modules/blog/templates/admin/add_article.phtml:69
+#: modules/blog/templates/admin/add_article.phtml:76
+#: modules/blog/templates/admin/add_section.phtml:57
+#: modules/blog/templates/admin/add_section.phtml:64
+#: modules/blog/templates/admin/settings.phtml:83
+#: modules/blog/templates/admin/settings.phtml:111
+#: modules/blog/templates/admin/settings.phtml:141
+msgid "Description"
+msgstr ""
+
+#: modules/blog/templates/admin/add_article.phtml:80
+msgid "Preview text"
+msgstr ""
+
+#: modules/blog/templates/admin/add_article.phtml:84
+#: modules/blog/templates/admin/add_section.phtml:68
+msgid "Text"
+msgstr ""
+
+#: modules/blog/templates/admin/add_article.phtml:88
+#: modules/blog/templates/admin/add_section.phtml:72
+#: modules/blog/templates/admin/settings.phtml:149
+msgid "Save"
+msgstr ""
+
+#: modules/blog/templates/admin/add_article.phtml:89
+#: modules/blog/templates/admin/add_section.phtml:73
+msgid "Back"
+msgstr ""
+
+#: modules/blog/templates/admin/add_section.phtml:22
+#: modules/blog/templates/admin/add_section.phtml:30
+msgid "Section name"
+msgstr ""
+
+#: modules/blog/templates/admin/add_section.phtml:34
+#: modules/blog/templates/admin/add_section.phtml:41
+msgid "Section code"
+msgstr ""
+
+#: modules/blog/templates/admin/del.phtml:11
+msgid "Confirm the action"
+msgstr ""
+
+#: modules/blog/templates/admin/del.phtml:20
+msgid "Section:"
+msgstr ""
+
+#: modules/blog/templates/admin/del.phtml:23
+msgid "Article:"
+msgstr ""
+
+#: modules/blog/templates/admin/del.phtml:25
+msgid "Do you really want to delete?"
+msgstr ""
+
+#: modules/blog/templates/admin/del.phtml:28
+#: modules/blog/templates/admin/sections.phtml:68
+#: modules/blog/templates/admin/sections.phtml:95
+msgid "Delete"
+msgstr ""
+
+#: modules/blog/templates/admin/del.phtml:29
+#: modules/blog/templates/admin/settings.phtml:150
+msgid "Cancel"
+msgstr ""
+
+#: modules/blog/templates/admin/index.phtml:17
+msgid "Content management"
+msgstr ""
+
+#: modules/blog/templates/admin/sections.phtml:38
+msgid "Add section"
+msgstr ""
+
+#: modules/blog/templates/admin/sections.phtml:46
+msgid "Name"
+msgstr ""
+
+#: modules/blog/templates/admin/sections.phtml:47
+msgid "Code"
+msgstr ""
+
+#: modules/blog/templates/admin/sections.phtml:48
+msgid "Type"
+msgstr ""
+
+#: modules/blog/templates/admin/sections.phtml:49
+msgid "Created at"
+msgstr ""
+
+#: modules/blog/templates/admin/sections.phtml:50
+msgid "Updated at"
+msgstr ""
+
+#: modules/blog/templates/admin/sections.phtml:67
+#: modules/blog/templates/admin/sections.phtml:94
+msgid "Edit"
+msgstr ""
+
+#: modules/blog/templates/admin/sections.phtml:77
+msgid "Section"
+msgstr ""
+
+#: modules/blog/templates/admin/sections.phtml:102
+msgid "Article"
+msgstr ""
+
+#: modules/blog/templates/admin/sections.phtml:109
+#: modules/blog/templates/public/index.phtml:37
+msgid "The list is empty"
+msgstr ""
+
+#: modules/blog/templates/admin/settings.phtml:35
+#: modules/blog/templates/admin/settings.phtml:42
+msgid "License name for CKFinder"
+msgstr ""
+
+#: modules/blog/templates/admin/settings.phtml:46
+#: modules/blog/templates/admin/settings.phtml:53
+msgid "License key for CKFinder"
+msgstr ""
+
+#: modules/blog/templates/admin/settings.phtml:59
+msgid "Meta tags for the main page"
+msgstr ""
+
+#: modules/blog/templates/admin/settings.phtml:61
+#: modules/blog/templates/admin/settings.phtml:68
+msgid "Blog name"
+msgstr ""
+
+#: modules/blog/templates/admin/settings.phtml:87
+msgid "Meta tag templates for sections"
+msgstr ""
+
+#: modules/blog/templates/admin/settings.phtml:89
+#: modules/blog/templates/admin/settings.phtml:96
+#: modules/blog/templates/admin/settings.phtml:119
+#: modules/blog/templates/admin/settings.phtml:126
+msgid "Title"
+msgstr ""
+
+#: modules/blog/templates/admin/settings.phtml:117
+msgid "Meta tag templates for articles"
+msgstr ""
+
+#: modules/blog/templates/public/index.phtml:42
+msgid "Categories"
+msgstr ""
