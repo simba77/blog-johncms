@@ -18,6 +18,8 @@ class Article extends AbstractAction
      */
     public function index(): void
     {
+        $this->nav_chain->add(__('Blog'), '/blog/');
+
         $route = $this->route;
         $current_section = null;
         if (! empty($route['category'])) {
