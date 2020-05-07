@@ -7,7 +7,7 @@ use Blog\Actions\Article;
 use Blog\Actions\Section;
 use Johncms\NavChain;
 use Johncms\System\i18n\Translator;
-use Johncms\Users\User;
+use Johncms\System\Users\User;
 
 /** @var NavChain $nav_chain */
 $nav_chain = di(NavChain::class);

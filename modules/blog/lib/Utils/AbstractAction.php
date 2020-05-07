@@ -7,7 +7,7 @@ namespace Blog\Utils;
 use Johncms\NavChain;
 use Johncms\System\Http\Request;
 use Johncms\System\View\Render;
-use Johncms\Users\User;
+use Johncms\System\Users\User;
 
 abstract class AbstractAction
 {

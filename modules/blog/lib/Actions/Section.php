@@ -50,10 +50,10 @@ class Section extends AbstractAction
             $subsections = di(Subsections::class);
             $ids = $subsections->getIds($current_section);
             $ids[] = $current_section->id;
-            $articles = (new BlogArticle())->orderBy('id')->whereIn('section_id', $ids)->paginate($this->user->set_user->kmess);
+            $articles = (new BlogArticle())->orderBy('id')->whereIn('section_id', $ids)->paginate($this->user->config->kmess);
         } else {
             $sections = (new BlogSection())->orWhereNull('parent')->get();
-            $articles = (new BlogArticle())->orderBy('id')->paginate($this->user->set_user->kmess);
+            $articles = (new BlogArticle())->orderBy('id')->paginate($this->user->config->kmess);
             $title = $this->settings['title'];
             $page_title = $this->settings['title'];
             $keywords = $this->settings['meta_keywords'];

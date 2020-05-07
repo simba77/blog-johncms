@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Database\Eloquent\CastsAttributes;
 use Illuminate\Database\Eloquent\Model;
 use Johncms\System\i18n\Translator;
-use Johncms\Users\User;
+use Johncms\System\Users\User;
 
 class FormattedDate implements CastsAttributes
 {
@@ -30,7 +30,7 @@ class FormattedDate implements CastsAttributes
             $translator = di(Translator::class);
 
             return Carbon::createFromTimeString($value)
-                ->addHours($user->set_user->timeshift)
+                ->addHours($user->config->timeshift)
                 ->locale($translator->getLocale())
                 ->isoFormat('lll');
         }
