@@ -51,11 +51,7 @@ class Helpers
         $parent = 0;
         foreach ($segments as $item) {
             try {
-                if (empty($parent)) {
-                    $check = (new BlogSection())->whereNull('parent')->where('code', $item)->firstOrFail();
-                } else {
-                    $check = (new BlogSection())->where('parent', $parent)->where('code', $item)->firstOrFail();
-                }
+                $check = (new BlogSection())->where('parent', $parent)->where('code', $item)->firstOrFail();
                 $path[] = $check;
                 $parent = $check->id;
             } catch (ModelNotFoundException $exception) {

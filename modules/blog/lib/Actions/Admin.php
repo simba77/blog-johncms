@@ -57,8 +57,8 @@ class Admin extends AbstractAction
         }
 
         if (empty($section_id)) {
-            $data['sections'] = (new BlogSection())->where('parent', $section_id)->orWhereNull('parent')->get();
-            $data['articles'] = (new BlogArticle())->where('section_id', $section_id)->orWhereNull('section_id')->orderBy('id')->paginate($this->user->config->kmess);
+            $data['sections'] = (new BlogSection())->where('parent', $section_id)->get();
+            $data['articles'] = (new BlogArticle())->where('section_id', $section_id)->orderBy('id')->paginate($this->user->config->kmess);
         } else {
             $data['sections'] = (new BlogSection())->where('parent', $section_id)->get();
             $data['articles'] = (new BlogArticle())->where('section_id', $section_id)->orderBy('id')->paginate($this->user->config->kmess);

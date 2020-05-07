@@ -56,7 +56,7 @@ class BlogArticle extends Model
     ];
 
     protected $casts = [
-        'parent'      => 'integer',
+        'section_id'  => 'integer',
         'view_count'  => 'integer',
         'name'        => SpecialChars::class,
         'page_title'  => SpecialChars::class,

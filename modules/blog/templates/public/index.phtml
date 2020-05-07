@@ -49,3 +49,18 @@ $this->layout('system::layout/default');
         <?php endif; ?>
     </div>
 </div>
+
+<?php $this->push('styles') ?>
+    <link rel="stylesheet" href="<?= $this->asset('blog/css/blog.css', true) ?>">
+<?php $this->stop(); ?>
+<?php $this->push('scripts') ?>
+    <script async charset="utf-8" src="//cdn.embedly.com/widgets/platform.js"></script>
+    <script>
+        document.querySelectorAll('oembed[url]').forEach(element => {
+            const anchor = document.createElement('a');
+            anchor.setAttribute('href', element.getAttribute('url'));
+            anchor.className = 'embedly-card';
+            element.appendChild(anchor);
+        });
+    </script>
+<?php $this->stop(); ?>

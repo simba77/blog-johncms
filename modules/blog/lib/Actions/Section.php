@@ -50,10 +50,10 @@ class Section extends AbstractAction
             $subsections = di(Subsections::class);
             $ids = $subsections->getIds($current_section);
             $ids[] = $current_section->id;
-            $articles = (new BlogArticle())->orderBy('id')->whereIn('section_id', $ids)->paginate($this->user->config->kmess);
+            $articles = (new BlogArticle())->orderByDesc('id')->whereIn('section_id', $ids)->paginate($this->user->config->kmess);
         } else {
-            $sections = (new BlogSection())->orWhereNull('parent')->get();
-            $articles = (new BlogArticle())->orderBy('id')->paginate($this->user->config->kmess);
+            $sections = (new BlogSection())->where('parent', 0)->get();
+            $articles = (new BlogArticle())->orderByDesc('id')->paginate($this->user->config->kmess);
             $title = $this->settings['title'];
             $page_title = $this->settings['title'];
             $keywords = $this->settings['meta_keywords'];
@@ -92,7 +92,7 @@ class Section extends AbstractAction
             ]
         );
 
-        $section_id = $this->request->getQuery('section_id', 0, FILTER_VALIDATE_INT);
+        $section_id = $this->request->getQuery('section_id', null, FILTER_VALIDATE_INT);
 
         if (! empty($section_id)) {
             try {
@@ -149,7 +149,6 @@ class Section extends AbstractAction
                     $check = (new BlogSection())
                         ->where('code', $data['fields']['code'])
                         ->whereNull('parent')
-                        ->orWhere('parent', '=', 0)
                         ->first();
                 }
 

@@ -129,16 +129,11 @@ class Article extends AbstractAction
             }
 
             if (empty($errors)) {
+                $check = false;
                 if (! empty($section_id)) {
                     $check = (new BlogArticle())
                         ->where('code', $data['fields']['code'])
                         ->where('section_id', $section_id)
-                        ->first();
-                } else {
-                    $check = (new BlogArticle())
-                        ->where('code', $data['fields']['code'])
-                        ->whereNull('parent')
-                        ->orWhere('section_id', '=', 0)
                         ->first();
                 }
 
