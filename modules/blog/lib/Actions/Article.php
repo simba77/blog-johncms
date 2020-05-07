@@ -234,4 +234,50 @@ class Article extends AbstractAction
 
         echo $this->render->render('blog::admin/add_article', ['data' => $data]);
     }
+
+    /**
+     * Delete section
+     */
+    public function del(): void
+    {
+        $data = [];
+        $id = $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
+
+        // Get the section to delete
+        try {
+            $article = (new BlogArticle())->findOrFail($id);
+        } catch (ModelNotFoundException $exception) {
+            exit($exception->getMessage());
+        }
+
+        $post = $this->request->getParsedBody();
+
+        // Checking the data and deleting the section
+        if (
+            isset($post['delete_token'], $_SESSION['delete_token']) &&
+            $_SESSION['delete_token'] === $post['delete_token'] &&
+            $this->request->getMethod() === 'POST'
+        ) {
+            // Delete article
+            try {
+                $article->delete();
+            } catch (\Exception $exception) {
+                exit($exception->getMessage());
+            }
+
+            $_SESSION['success_message'] = __('The article was successfully deleted');
+            header('Location: /blog/admin/content/?section_id=' . $article->section_id);
+            exit;
+        }
+
+        $data['article'] = $article;
+
+        // Generate the token
+        $data['delete_token'] = uniqid('', true);
+        $_SESSION['delete_token'] = $data['delete_token'];
+
+        $data['action_url'] = '/blog/admin/del_article/?id=' . $id;
+
+        echo $this->render->render('blog::admin/del', ['data' => $data]);
+    }
 }

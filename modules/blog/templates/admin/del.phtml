@@ -17,7 +17,10 @@
     <div class="modal-body">
         <input type="hidden" name="delete_token" value="<?= $data['delete_token'] ?>">
         <?php if (! empty($data['section'])): ?>
-            <div class="font-weight-bold"><?= $data['section']->name ?></div>
+            <div><?= __('Section:') ?> <b><?= $data['section']->name ?></b></div>
+        <?php endif; ?>
+        <?php if (! empty($data['article'])): ?>
+            <div><?= __('Article:') ?> <b><?= $data['article']->name ?></b></div>
         <?php endif; ?>
         <?= __('Do you really want to delete?') ?>
     </div>

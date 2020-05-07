@@ -92,7 +92,7 @@ $articles = $data['articles'];
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="/blog/admin/edit_article/?article_id=<?= $article->id ?>"><?= __('Edit') ?></a>
-                            <a class="dropdown-item" href="#"><?= __('Delete') ?></a>
+                            <a class="dropdown-item" data-url="/blog/admin/del_article/?id=<?= $article->id ?>" data-toggle="modal" data-target=".ajax_modal"><?= __('Delete') ?></a>
                         </div>
                     </div>
                 </th>

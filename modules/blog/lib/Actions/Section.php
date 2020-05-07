@@ -293,6 +293,6 @@ class Section extends AbstractAction
 
         $data['action_url'] = '/blog/admin/del_section/?id=' . $id;
 
-        echo $this->render->render('blog::admin/del_section', ['data' => $data]);
+        echo $this->render->render('blog::admin/del', ['data' => $data]);
     }
 }
