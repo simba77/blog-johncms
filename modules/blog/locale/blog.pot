@@ -154,7 +154,6 @@ msgid "Preview text"
 msgstr ""
 
 #: modules/blog/templates/admin/add_article.phtml:84
-#: modules/blog/templates/admin/add_section.phtml:68
 msgid "Text"
 msgstr ""
 
@@ -177,6 +176,10 @@ msgstr ""
 #: modules/blog/templates/admin/add_section.phtml:34
 #: modules/blog/templates/admin/add_section.phtml:41
 msgid "Section code"
+msgstr ""
+
+#: modules/blog/templates/admin/add_section.phtml:68
+msgid "Text after a list"
 msgstr ""
 
 #: modules/blog/templates/admin/del.phtml:11
