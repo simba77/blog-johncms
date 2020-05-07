@@ -14,7 +14,9 @@ use Illuminate\Support\Str;
 
 class Section extends AbstractAction
 {
-
+    /**
+     * List of articles and sections
+     */
     public function index(): void
     {
         $route = $this->route;
@@ -240,5 +242,57 @@ class Section extends AbstractAction
         $data['errors'] = $errors;
 
         echo $this->render->render('blog::admin/add_section', ['data' => $data]);
+    }
+
+    /**
+     * Delete section
+     */
+    public function del(): void
+    {
+        $data = [];
+        $id = $this->request->getQuery('id', 0, FILTER_VALIDATE_INT);
+
+        // Get the section to delete
+        try {
+            $section = (new BlogSection())->findOrFail($id);
+        } catch (ModelNotFoundException $exception) {
+            exit($exception->getMessage());
+        }
+
+        $post = $this->request->getParsedBody();
+
+        // Checking the data and deleting the section
+        if (
+            isset($post['delete_token'], $_SESSION['delete_token']) &&
+            $_SESSION['delete_token'] === $post['delete_token'] &&
+            $this->request->getMethod() === 'POST'
+        ) {
+            /** @var Subsections $subsections */
+            $subsections = di(Subsections::class);
+            $children_sections = $subsections->getIds($section);
+            $children_sections[] = $section->id;
+
+            $subsections->clearCache();
+
+            // Delete articles
+            (new BlogArticle())->whereIn('section_id', $children_sections)->delete();
+
+            // Delete subsections
+            (new BlogSection())->whereIn('id', $children_sections)->delete();
+
+            $_SESSION['success_message'] = __('The section was successfully deleted');
+            header('Location: /blog/admin/content/?section_id=' . $section->parent);
+            exit;
+        }
+
+        $data['section'] = $section;
+
+        // Generate the token
+        $data['delete_token'] = uniqid('', true);
+        $_SESSION['delete_token'] = $data['delete_token'];
+
+        $data['action_url'] = '/blog/admin/del_section/?id=' . $id;
+
+        echo $this->render->render('blog::admin/del_section', ['data' => $data]);
     }
 }

@@ -11,6 +11,7 @@ class Subsections
 {
     protected $cache = [];
     private $cache_updated = false;
+    private $cache_clear = false;
     private $cache_file = DATA_PATH . 'cache/blog_subsections_cache.php';
 
     public function __invoke(ContainerInterface $container): self
@@ -49,6 +50,14 @@ class Subsections
     }
 
     /**
+     * Set the flag for clearing the cache
+     */
+    public function clearCache(): void
+    {
+        $this->cache_clear = true;
+    }
+
+    /**
      * Recursively getting subsections.
      *
      * @param $subsections
@@ -71,9 +80,11 @@ class Subsections
      */
     public function __destruct()
     {
-        if ($this->cache_updated) {
+        if ($this->cache_updated && ! $this->cache_clear) {
             $cache_data = "<?php\n\n" . 'return ' . var_export($this->cache, true) . ";\n";
             file_put_contents($this->cache_file, $cache_data);
+        } elseif ($this->cache_clear) {
+            @unlink($this->cache_file);
         }
     }
 }
