@@ -2,6 +2,9 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Johncms\System\View\Render;
+
+$view = di(Render::class);
 
 Capsule::Schema()->create(
     'blog_sections',
