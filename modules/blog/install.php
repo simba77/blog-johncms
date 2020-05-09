@@ -49,6 +49,24 @@ Capsule::Schema()->create(
     }
 );
 
+Capsule::Schema()->create(
+    'blog_votes',
+    static function (Blueprint $table) {
+        $table->increments('id');
+        $table->integer('article_id')->unsigned();
+        $table->integer('user_id')->unsigned();
+        $table->integer('vote');
+
+        $table->unique(['article_id', 'user_id'], 'article_user');
+
+        $table->foreign('article_id')
+            ->references('id')
+            ->on('blog_articles')
+            ->onUpdate('cascade')
+            ->onDelete('cascade');
+    }
+);
+
 echo $view->render(
     'system::pages/result',
     [
