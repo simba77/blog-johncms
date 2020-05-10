@@ -57,6 +57,7 @@ class BlogArticle extends Model
         'description',
         'preview_text',
         'text',
+        'tags',
         'view_count',
         'created_by',
         'updated_by',
@@ -69,6 +70,7 @@ class BlogArticle extends Model
         'page_title'  => SpecialChars::class,
         'keywords'    => SpecialChars::class,
         'description' => SpecialChars::class,
+        'tags'        => SpecialChars::class,
         'created_at'  => FormattedDate::class,
         'updated_at'  => FormattedDate::class,
     ];

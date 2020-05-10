@@ -20,7 +20,7 @@ class SpecialChars implements CastsAttributes
      */
     public function get($model, $key, $value, $attributes): string
     {
-        return htmlspecialchars($value);
+        return !empty($value) ? htmlspecialchars($value) : '';
     }
 
     /**
