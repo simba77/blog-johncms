@@ -53,6 +53,11 @@ figure {
             padding: .4em;
         }
     }
+    &.image {
+        img {
+            max-width: 100%;
+        }
+    }
 }
 
 .btn {
