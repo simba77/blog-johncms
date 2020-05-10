@@ -1,1 +1,59 @@
-.menu-icon{width:15px;height:15px}.p-no-margin p{margin-bottom:0}.p-no-margin blockquote{overflow:hidden;padding-right:1.5em;padding-left:1.5em;margin-left:0;margin-right:0;font-style:italic;border-left:5px solid #ccc}.p-no-margin[dir=rtl] blockquote{border-left:0;border-right:5px solid #ccc}figure.table table{border-collapse:collapse;border-spacing:0;width:100%;height:100%;border:1px double #b3b3b3}figure.table th{font-weight:700;background:rgba(0,0,0,.05);padding:.4em;border:1px solid #bfbfbf;border-bottom:none}figure.table td{border:1px solid #bfbfbf;padding:.4em}
+.menu-icon {
+  width: 15px;
+  height: 15px;
+}
+
+.p-no-margin p {
+  margin-bottom: 0;
+}
+
+.p-no-margin blockquote {
+  overflow: hidden;
+  padding-right: 1.5em;
+  padding-left: 1.5em;
+  margin-left: 0;
+  margin-right: 0;
+  font-style: italic;
+  border-left: solid 5px #cccccc;
+}
+
+.p-no-margin[dir=rtl] blockquote {
+  border-left: 0;
+  border-right: solid 5px #cccccc;
+}
+
+figure.table table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px double #b3b3b3;
+}
+
+figure.table th {
+  font-weight: 700;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 0.4em;
+  border: 1px solid #bfbfbf;
+  border-bottom: none;
+}
+
+figure.table td {
+  border: 1px solid #bfbfbf;
+  padding: 0.4em;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.btn.liked {
+  color: #036a0c;
+}
+
+.btn.disliked {
+  color: #ff0000;
+}
+
+
+/*# sourceMappingURL=blog.css.map*/

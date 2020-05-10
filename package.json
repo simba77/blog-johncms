@@ -35,13 +35,15 @@
     "vue-template-compiler": "^2.6.11"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "cross-env": "^6.0.3",
     "embed-js": "^5.0.4",
     "embed-preset-basic": "^5.0.4",
     "jquery": "^3.4.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.15",
     "popper.js": "^1.15.0",
-    "swiper": "^5.2.1"
+    "swiper": "^5.2.1",
+    "vue": "^2.6.11"
   }
 }
