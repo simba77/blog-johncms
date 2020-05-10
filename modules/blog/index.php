@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 use Blog\Actions\Article;
 use Blog\Actions\Section;
+use Blog\Actions\Vote;
+use Johncms\System\Http\Request;
 use Johncms\System\i18n\Translator;
 
 require_once __DIR__ . '/lib/HTMLPurifier/HTMLPurifier.auto.php';
@@ -13,11 +15,28 @@ di(Translator::class)->addTranslationDomain('blog', __DIR__ . '/locale');
 
 $route = di('route');
 
+/** @var Request $request */
+$request = di(Request::class);
+
 $loader = new Aura\Autoload\Loader();
 $loader->register();
 $loader->addPrefix('Blog', __DIR__ . '/lib');
 
-if (! empty($route['article'])) {
+$category = ! empty($route['category']) ? rtrim($route['category'], '/') : '';
+
+if (! empty($category) && $category === 'act') {
+    $action_type = $request->getQuery('action', '');
+    switch ($action_type) {
+        // Страница добавления голоса
+        case 'set_vote':
+            (new Vote())->add();
+            break;
+
+        // Неизвестная страница
+        default:
+            pageNotFound();
+    }
+} elseif (! empty($route['article'])) {
     // Если запросили страницу статьи, открываем её
     (new Article())->index();
 } else {

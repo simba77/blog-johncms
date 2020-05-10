@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class BlogVote extends Model
 {
+    public $timestamps = false;
+
     protected $fillable = [
         'article_id',
         'user_id',

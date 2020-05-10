@@ -1,7 +1,6 @@
 <?php
 
 /**
- * @var $data
  * @var \Blog\Models\BlogArticle $article
  * @var \Blog\Models\BlogSection $current_section
  */
@@ -19,11 +18,9 @@ $this->layout('system::layout/default');
             <div class="d-flex align-items-center mr-2"><?= __('Rating:') ?></div>
             <article-likes
                 :article_id="<?= $article->id ?>"
-                :plus="5"
-                :minus="4"
-                :rating="213"
+                :rating="<?= $article->rating ?>"
                 :can_vote="<?= $user->isValid() ? 'true' : 'false' ?>"
-                :voted="1"
+                :voted="<?= $article->current_vote ?>"
             ></article-likes>
         </div>
         <?php if ($article->view_count): ?>

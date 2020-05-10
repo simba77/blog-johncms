@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Johncms\System\Users\User;
 
 /**
  * @mixin Builder
@@ -38,6 +39,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $meta_title
  * @property $meta_keywords
  * @property $meta_description
+ * @property $rating - Article rating
+ * @property $current_vote - The user's current vote.
  */
 class BlogArticle extends Model
 {
@@ -162,5 +165,37 @@ class BlogArticle extends Model
     public function votes(): HasMany
     {
         return $this->hasMany(BlogVote::class, 'article_id', 'id');
+    }
+
+    /**
+     * Article rating
+     *
+     * @return int
+     */
+    public function getRatingAttribute(): int
+    {
+        return $this->votes()->sum('vote');
+    }
+
+    /**
+     * The user's current vote.
+     *
+     * @return int
+     */
+    public function getCurrentVoteAttribute(): int
+    {
+        /** @var User $user */
+        $user = di(User::class);
+        if (! $user->isValid()) {
+            return 0;
+        }
+
+        /** @var BlogVote $vote */
+        $vote = $this->votes()->where('user_id', $user->id)->first();
+        if ($vote === null) {
+            return 0;
+        }
+
+        return $vote->vote;
     }
 }
