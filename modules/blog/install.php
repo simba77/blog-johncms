@@ -34,6 +34,7 @@ Capsule::Schema()->create(
         $table->text('preview_text')->nullable();
         $table->longText('text');
         $table->integer('view_count')->nullable();
+        $table->string('tags')->nullable()->index();
         $table->integer('created_by')->nullable();
         $table->integer('updated_by')->nullable();
         $table->timestamps();

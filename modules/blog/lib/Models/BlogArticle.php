@@ -28,11 +28,13 @@ use Johncms\System\Users\User;
  * @property $view_count - Количество просмотров
  * @property $keywords - Ключевые слова
  * @property $description - Описание
+ * @property $tags - Tags
  * @property $created_at - Дата создания
  * @property $updated_at - Дата изменения
  * @property $created_by - Автор
  * @property $updated_by - Пользователь, изменивший запись
  *
+ * Computed properties
  * @property BlogSection $parentSection - Родительский раздел
  * @property BlogVote $votes - Votes for the article
  * @property $url - URL адрес страницы просмотра статьи
