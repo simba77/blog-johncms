@@ -8,6 +8,7 @@ use Blog\Utils\Helpers;
 use Blog\Utils\SectionPathCache;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -32,6 +33,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property $updated_by - Пользователь, изменивший запись
  *
  * @property BlogSection $parentSection - Родительский раздел
+ * @property BlogVote $votes - Votes for the article
  * @property $url - URL адрес страницы просмотра статьи
  * @property $meta_title
  * @property $meta_keywords
@@ -150,5 +152,15 @@ class BlogArticle extends Model
         }
         $config = di('config')['blog'];
         return str_replace('#article_name#', $this->name, $config['article_meta_description']);
+    }
+
+    /**
+     * Votes
+     *
+     * @return HasMany
+     */
+    public function votes(): HasMany
+    {
+        return $this->hasMany(BlogVote::class, 'article_id', 'id');
     }
 }
