@@ -5,7 +5,7 @@
 
 .p-no-margin {
     p {
-        margin-bottom: 0;
+        margin-bottom: 0.8rem;
     }
 
     blockquote {
@@ -16,6 +16,9 @@
         margin-right: 0;
         font-style: italic;
         border-left: solid 5px hsl(0, 0%, 80%);
+        p {
+            margin-bottom: 0;
+        }
     }
 
     &[dir="rtl"] {

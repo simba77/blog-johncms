@@ -9,11 +9,11 @@ $this->layout('system::layout/default');
 
 ?>
 <div id="blog">
-    <div class="p-no-margin">
+    <div class="p-no-margin" style="max-width: 1080px;">
         <?= $article->text_safe ?>
     </div>
 
-    <div class="article-stat border-top border-bottom d-flex align-items-center pt-2 pb-2 mt-3">
+    <div class="article-stat border d-inline-flex align-items-center py-2 px-4 mt-3 border-radius-12">
         <div class="d-flex align-items-center mr-4">
             <div class="d-flex align-items-center mr-2"><?= __('Rating:') ?></div>
             <article-likes
