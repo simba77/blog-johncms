@@ -202,4 +202,21 @@ class BlogArticle extends Model
 
         return $vote->vote;
     }
+
+    /**
+     * Tags
+     *
+     * @param $value
+     * @return array
+     */
+    public function getTagsAttribute($value): array
+    {
+        $tags = [];
+        if (! empty($value)) {
+            $tags = explode(',', $value);
+            $tags = array_map('trim', $tags);
+            $tags = array_map('htmlspecialchars', $tags);
+        }
+        return $tags;
+    }
 }
