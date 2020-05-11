@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Blog\Actions\Article;
+use Blog\Actions\Search;
 use Blog\Actions\Section;
 use Blog\Actions\Vote;
 use Johncms\System\Http\Request;
@@ -30,6 +31,11 @@ if (! empty($category) && $category === 'act') {
         // Страница добавления голоса
         case 'set_vote':
             (new Vote())->add();
+            break;
+
+        // Страница добавления голоса
+        case 'search_by_tag':
+            (new Search())->byTags();
             break;
 
         // Неизвестная страница
