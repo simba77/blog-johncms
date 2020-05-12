@@ -1,24 +1,28 @@
 <?php
 
 /**
- * @var $title
- * @var $page_title
- * @var $current_section
  * @var $user
+ * @var $query
  * @var $articles Illuminate\Contracts\Pagination\LengthAwarePaginator
- * @var $sections \Blog\Models\BlogSection
  */
 
 $this->layout('system::layout/default');
 ?>
-<?php if ($user->rights >= 9): ?>
-    <div class="mb-3 mt-n1">
-        <a href="/blog/admin/" class="btn btn-outline-danger btn-sm"><?= __('Admin panel') ?></a>
-    </div>
-<?php endif ?>
+<div>
+    <form action="/blog/" method="get" class="mb-3" style="max-width: 300px;">
+        <input type="hidden" name="action" value="search">
+        <label for="query"><?= __('Search query') ?></label>
+        <div class="input-group">
+            <input type="text" name="query" id="query" class="form-control" placeholder="<?= __('Search query') ?>" value="<?= $query ?>">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary" type="submit"><?= __('Search') ?></button>
+            </div>
+        </div>
+    </form>
+</div>
 <div class="row">
     <div class="col-12 col-xl-9">
-        <?php if ($articles->count() > 0): ?>
+        <?php if ($articles !== null && $articles->count() > 0): ?>
             <?php foreach ($articles as $article): ?>
                 <?php /** @var $article \Blog\Models\BlogArticle */ ?>
                 <div class="card border-0 mb-2 shadow">
@@ -34,27 +38,7 @@ $this->layout('system::layout/default');
                 <?= $articles->render() ?>
             </div>
         <?php else: ?>
-            <div class="alert alert-info"><?= __('The list is empty') ?></div>
-        <?php endif; ?>
-    </div>
-    <div class="col-12 col-xl-3">
-        <form action="/blog/" method="get" class="mb-3 pl-3">
-            <input type="hidden" name="action" value="search">
-            <div class="input-group">
-                <input type="text" name="query" id="query" class="form-control" placeholder="<?= __('Search query') ?>">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="submit"><?= __('Search') ?></button>
-                </div>
-            </div>
-        </form>
-        <?php if ($sections->count() > 0): ?>
-            <h3 class="pl-3"><?= __('Categories') ?></h3>
-            <nav class="nav flex-column">
-                <?php foreach ($sections as $section): ?>
-                    <?php /** @var $section \Blog\Models\BlogSection */ ?>
-                    <a class="nav-link" href="<?= $section->url ?>"><?= $section->name ?></a>
-                <?php endforeach; ?>
-            </nav>
+            <div class="alert alert-info"><?= __('The search didn\'t yield any results.') ?></div>
         <?php endif; ?>
     </div>
 </div>

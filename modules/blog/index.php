@@ -31,9 +31,14 @@ if (empty($category) && ! empty($action_type)) {
             (new Vote())->add();
             break;
 
-        // Страница добавления голоса
+        // Страница поиска по тегам
         case 'search_by_tag':
             (new Search())->byTags();
+            break;
+
+        // Страница поиска по содержимому
+        case 'search':
+            (new Search())->index();
             break;
 
         // Неизвестная страница

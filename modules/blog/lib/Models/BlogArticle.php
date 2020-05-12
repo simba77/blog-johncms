@@ -43,10 +43,13 @@ use Johncms\System\Users\User;
  * @property $meta_description
  * @property $rating - Article rating
  * @property $current_vote - The user's current vote.
+ * @method BlogArticle search()
  */
 class BlogArticle extends Model
 {
     use SoftDeletes;
+
+    protected $table = 'blog_articles';
 
     protected $fillable = [
         'section_id',
@@ -74,6 +77,18 @@ class BlogArticle extends Model
         'created_at'  => FormattedDate::class,
         'updated_at'  => FormattedDate::class,
     ];
+
+    /**
+     * Adding a search index to the query
+     *
+     * @param Builder $query
+     * @return Builder
+     */
+    public function scopeSearch(Builder $query): Builder
+    {
+        return $query->leftJoin('blog_search_index', 'blog_articles.id', '=', 'blog_search_index.article_id')
+            ->addSelect('blog_articles.*');
+    }
 
     /**
      * @return HasOne
