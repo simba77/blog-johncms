@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Blog\Actions;
 
 use Blog\Models\BlogArticle;
+use Blog\Models\BlogSearchIndex;
 use Blog\Models\BlogSection;
 use Blog\Utils\AbstractAction;
 use Blog\Utils\Helpers;
@@ -142,7 +143,15 @@ class Article extends AbstractAction
 
                 if (! $check) {
                     $data['fields']['created_by'] = $this->user->id;
-                    (new BlogArticle())->create($data['fields']);
+                    $created_article = (new BlogArticle())->create($data['fields']);
+
+                    $search_text = strip_tags($created_article->name . ' ' . $created_article->preview_text . ' ' . $created_article->text);
+                    (new BlogSearchIndex())->create(
+                        [
+                            'article_id' => $created_article->id,
+                            'text'       => $search_text,
+                        ]
+                    );
                     $_SESSION['success_message'] = __('The article was created successfully');
                     header('Location: /blog/admin/content/?section_id=' . $section_id);
                     exit;
@@ -221,6 +230,12 @@ class Article extends AbstractAction
                 if (! $check) {
                     $data['fields']['updated_by'] = $this->user->id;
                     $article->update($data['fields']);
+
+                    $search_text = strip_tags($data['fields']['name'] . ' ' . $data['fields']['preview_text'] . ' ' . $data['fields']['text']);
+                    (new BlogSearchIndex())->updateOrCreate(
+                        ['article_id' => $article->id],
+                        ['text' => $search_text]
+                    );
                     $_SESSION['success_message'] = __('The article was updated successfully');
                     header('Location: /blog/admin/content/?section_id=' . $article->section_id);
                     exit;
