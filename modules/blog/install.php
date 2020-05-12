@@ -92,6 +92,27 @@ if (! $schema->hasTable('blog_search_index')) {
     );
 }
 
+if (! $schema->hasTable('blog_comments')) {
+    $schema->create(
+        'blog_comments',
+        static function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('article_id')->unsigned()->index();
+            $table->integer('user_id')->unsigned();
+            $table->longText('text');
+            $table->text('user_data');
+            $table->dateTime('created_at');
+            $table->softDeletes();
+
+            $table->foreign('article_id')
+                ->references('id')
+                ->on('blog_articles')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+        }
+    );
+}
+
 echo $view->render(
     'system::pages/result',
     [
