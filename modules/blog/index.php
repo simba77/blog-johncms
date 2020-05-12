@@ -23,10 +23,8 @@ $loader = new Aura\Autoload\Loader();
 $loader->register();
 $loader->addPrefix('Blog', __DIR__ . '/lib');
 
-$category = ! empty($route['category']) ? rtrim($route['category'], '/') : '';
-
-if (! empty($category) && $category === 'act') {
-    $action_type = $request->getQuery('action', '');
+$action_type = $request->getQuery('action', '');
+if (empty($category) && ! empty($action_type)) {
     switch ($action_type) {
         // Страница добавления голоса
         case 'set_vote':

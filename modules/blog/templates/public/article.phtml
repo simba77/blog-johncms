@@ -10,7 +10,7 @@ $this->layout('system::layout/default');
 $tags = [];
 if (! empty($article->tags)) {
     foreach ($article->tags as $k => $tag) {
-        $tags[] = '<a href="/blog/act/?action=search_by_tag&tag=' . urlencode($tag) . '">' . $tag . '</a>';
+        $tags[] = '<a href="/blog/?action=search_by_tag&tag=' . urlencode($tag) . '">' . $tag . '</a>';
     }
 }
 

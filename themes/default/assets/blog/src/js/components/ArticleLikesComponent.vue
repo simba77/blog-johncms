@@ -59,7 +59,7 @@
             setVote(type)
             {
                 this.loading = true;
-                axios.get('/blog/act/?action=set_vote&type_vote=' + type + '&article_id=' + this.article_id)
+                axios.get('/blog/?action=set_vote&type_vote=' + type + '&article_id=' + this.article_id)
                         .then(response => {
                             this.rating = response.data.rating;
                             this.voted = response.data.voted;
@@ -67,7 +67,7 @@
                             this.loading = false;
                         })
                         .catch(error => {
-                            alert(error.error);
+                            alert(error);
                             this.loading = false;
                         });
             }
