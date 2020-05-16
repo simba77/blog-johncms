@@ -18,6 +18,8 @@ use Johncms\Users\User;
  * @property $text - Текст с описанием
  * @property array $user_data - Некоторые данные пользователя
  * @property $created_at - Дата создания
+ *
+ * @property User $user
  */
 class BlogComments extends Model
 {

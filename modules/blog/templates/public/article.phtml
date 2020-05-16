@@ -45,6 +45,8 @@ if (! empty($article->tags)) {
         <?php endif ?>
     </div>
 
+    <blog-comments :article_id="<?= $article->id ?>"></blog-comments>
+
     <div class="mt-3">
         <a href="<?= $current_section->url ?>"><?= __('Back') ?></a>
     </div>

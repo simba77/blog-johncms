@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Blog\Actions\Article;
+use Blog\Actions\Comments;
 use Blog\Actions\Search;
 use Blog\Actions\Section;
 use Blog\Actions\Vote;
@@ -39,6 +40,11 @@ if (empty($category) && ! empty($action_type)) {
         // Страница поиска по содержимому
         case 'search':
             (new Search())->index();
+            break;
+
+        // Страница списка комментариев
+        case 'comments':
+            (new Comments())->index();
             break;
 
         // Неизвестная страница
