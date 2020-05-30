@@ -11,7 +11,9 @@ use Blog\Utils\Helpers;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Arr;
 use Johncms\System\Http\Environment;
+use Johncms\System\Legacy\Tools;
 use Johncms\System\View\Extension\Avatar;
 
 class Comments extends AbstractAction
@@ -34,10 +36,15 @@ class Comments extends AbstractAction
             /** @var Avatar $avatar */
             $avatar = di(Avatar::class);
 
+            /** @var Tools $tools */
+            $tools = di(Tools::class);
+
+            $current_user = $this->user;
+
             $array = [
                 'current_page'   => $comments->currentPage(),
                 'data'           => $comments->getItems()->map(
-                    static function (BlogComments $comment) use ($avatar) {
+                    static function (BlogComments $comment) use ($avatar, $tools, $current_user) {
                         $user = $comment->user;
                         $user_data = [];
                         if ($user) {
@@ -52,12 +59,37 @@ class Comments extends AbstractAction
                             ];
                         }
 
-                        return [
+                        $text = $tools->checkout($comment->text, 1, 1);
+                        $text = $tools->smilies($text, ($user->rights > 0));
+
+                        $message = [
                             'id'         => $comment->id,
                             'created_at' => $comment->created_at,
-                            'text'       => $comment->text,
+                            'text'       => $text,
                             'user'       => $user_data,
                         ];
+
+                        if ($current_user->id === $user->id) {
+                            $message['can_delete'] = true;
+                        }
+
+                        $message['can_quote'] = false;
+                        $message['can_reply'] = false;
+                        if ($current_user->id !== $user->id && $current_user->isValid()) {
+                            $message['can_quote'] = true;
+                            $message['can_reply'] = true;
+                        }
+
+                        if ($current_user->rights > 6) {
+                            $message['can_delete'] = true;
+                            $message['user_agent'] = Arr::get($comment->user_data, 'user_agent', '');
+                            $message['ip'] = Arr::get($comment->user_data, 'ip', '');
+                            $message['search_ip_url'] = '/admin/search_ip/?ip=' . $message['ip'];
+                            $message['ip_via_proxy'] = Arr::get($comment->user_data, 'ip_via_proxy', '');
+                            $message['search_ip_via_proxy_url'] = '/admin/search_ip/?ip=' . $message['ip_via_proxy'];
+                        }
+
+                        return $message;
                     }
                 ),
                 'first_page_url' => $comments->url(1),

@@ -40,23 +40,23 @@
             <div class="post-body pt-2 pb-2" v-html="message.text"></div>
             <div class="post-footer d-flex justify-content-between">
                 <div class="overflow-hidden">
-                    <div class="post-meta d-flex">
+                    <div class="post-meta d-flex" v-if="message.ip">
                         <div class="user-ip mr-2">
-                            <a href="">192.168.0.1</a>
+                            <a :href="message.search_ip_url">{{ message.ip }}</a>
                         </div>
                         <div class="useragent">
-                            <span>Safari</span>
+                            <span>{{ message.user_agent }}</span>
                         </div>
                     </div>
                 </div>
                 <div class="d-flex">
-                    <div class="ml-3">
+                    <div class="ml-3" v-if="message.can_reply">
                         <a href="#" @click.prevent="reply(message)">Ответить</a>
                     </div>
-                    <div class="ml-3">
+                    <div class="ml-3" v-if="message.can_quote">
                         <a href="#" @click.prevent="quote(message)">Цитировать</a>
                     </div>
-                    <div class="dropdown ml-3">
+                    <div class="dropdown ml-3" v-if="message.can_delete">
                         <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <svg class="icon text-primary">
                                 <use xlink:href="/themes/default/assets/icons/sprite.svg?#more_horizontal"/>
@@ -92,7 +92,6 @@
                 </div>
             </form>
         </div>
-
     </div>
 </template>
 
@@ -139,7 +138,7 @@
             quote(message)
             {
                 let text = message.text.replace(/(<([^>]+)>)/ig, "");
-                this.comment_text = '[quote][b]' + message.user.user_name + "[/b] " + message.created_at + message.id + "\n" + text + "[/quote]\n";
+                this.comment_text = '[quote][b]' + message.user.user_name + "[/b] " + message.created_at + message.id + "\n" + text + "[/quote]";
                 $('#comment_text').focus();
             },
             sendComment()
