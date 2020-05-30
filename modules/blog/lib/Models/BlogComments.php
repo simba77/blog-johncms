@@ -25,6 +25,8 @@ class BlogComments extends Model
 {
     use SoftDeletes;
 
+    public $timestamps = false;
+
     protected $fillable = [
         'article_id',
         'user_id',

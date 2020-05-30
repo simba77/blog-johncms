@@ -47,6 +47,11 @@ if (empty($category) && ! empty($action_type)) {
             (new Comments())->index();
             break;
 
+        // Страница добавления комментария
+        case 'add_comment':
+            (new Comments())->add();
+            break;
+
         // Неизвестная страница
         default:
             pageNotFound();

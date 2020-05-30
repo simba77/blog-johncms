@@ -51,10 +51,10 @@
                 </div>
                 <div class="d-flex">
                     <div class="ml-3">
-                        <a href="">Ответить</a>
+                        <a href="#" @click.prevent="reply(message)">Ответить</a>
                     </div>
                     <div class="ml-3">
-                        <a href="">Цитировать</a>
+                        <a href="#" @click.prevent="quote(message)">Цитировать</a>
                     </div>
                     <div class="dropdown ml-3">
                         <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -73,12 +73,22 @@
 
         <div class="mt-4">
             <h3 class="font-weight-bold">Написать комментарий</h3>
-            <form action="">
+            <form action="" @submit.prevent="sendComment">
+                <div class="d-flex" v-if="error_message">
+                    <div class="alert alert-danger d-inline">{{error_message}}</div>
+                </div>
+                <div class="d-flex" v-if="comment_added_message">
+                    <div class="alert alert-success d-inline">{{comment_added_message}}</div>
+                </div>
                 <div style="max-width: 800px;">
-                    <textarea name="text" id="text" rows="6" required class="form-control"></textarea>
+                    <textarea name="text" id="comment_text" rows="6" required class="form-control" v-model="comment_text"></textarea>
                 </div>
                 <div class="mt-2">
-                    <button type="submit" name="submit" value="1" class="btn btn-primary">Написать</button>
+                    <button type="submit" name="submit" value="1" class="btn btn-primary" :disabled="loading">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loading"></span>
+                        Написать
+                    </button>
+                    <div></div>
                 </div>
             </form>
         </div>
@@ -96,6 +106,9 @@
         {
             return {
                 messages: {},
+                comment_text: '',
+                comment_added_message: '',
+                error_message: '',
                 loading: false,
             }
         },
@@ -118,9 +131,34 @@
                             this.loading = false;
                         });
             },
-            reply()
+            reply(message)
             {
-
+                this.comment_text = '[b]' + message.user.user_name + '[/b], ';
+                $('#comment_text').focus();
+            },
+            quote(message)
+            {
+                let text = message.text.replace(/(<([^>]+)>)/ig, "");
+                this.comment_text = '[quote][b]' + message.user.user_name + "[/b] " + message.created_at + message.id + "\n" + text + "[/quote]\n";
+                $('#comment_text').focus();
+            },
+            sendComment()
+            {
+                this.loading = true;
+                axios.post('/blog/?action=add_comment&article_id=' + this.article_id, {
+                    comment: this.comment_text
+                })
+                        .then(response => {
+                            this.comment_added_message = response.data.message;
+                            this.loading = false;
+                            this.comment_text = '';
+                            this.error_message = '';
+                            this.getComments(response.data.last_page);
+                        })
+                        .catch(error => {
+                            this.error_message = error.response.data.message;
+                            this.loading = false;
+                        });
             }
         }
     }
