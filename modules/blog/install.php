@@ -2,9 +2,13 @@
 
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Schema\Builder;
 use Johncms\System\View\Render;
 
 $view = di(Render::class);
+
+Builder::$defaultStringLength = 191;
+
 $schema = Capsule::Schema();
 
 if (! $schema->hasTable('blog_sections')) {
