@@ -86,6 +86,10 @@ figure {
     border-bottom: 1px solid #dee2e6;
     min-height: 85px;
 
+    @media (max-width: 768px) {
+        padding-left: 10px;
+    }
+
     .post-body {
         border-top: none;
     }

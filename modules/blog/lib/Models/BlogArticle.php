@@ -43,6 +43,7 @@ use Johncms\System\Users\User;
  * @property $meta_description
  * @property $rating - Article rating
  * @property $current_vote - The user's current vote.
+ * @property $comments_count
  * @method BlogArticle search()
  */
 class BlogArticle extends Model
@@ -77,6 +78,8 @@ class BlogArticle extends Model
         'created_at'  => FormattedDate::class,
         'updated_at'  => FormattedDate::class,
     ];
+
+    private $rating_cache;
 
     /**
      * Adding a search index to the query
@@ -187,13 +190,27 @@ class BlogArticle extends Model
     }
 
     /**
+     * Comments
+     *
+     * @return HasMany
+     */
+    public function comments(): HasMany
+    {
+        return $this->hasMany(BlogComments::class, 'article_id', 'id');
+    }
+
+    /**
      * Article rating
      *
      * @return int
      */
     public function getRatingAttribute(): int
     {
-        return $this->votes()->sum('vote');
+        if ($this->rating_cache !== null) {
+            return $this->rating_cache;
+        }
+        $this->rating_cache = $this->votes()->sum('vote');
+        return $this->rating_cache;
     }
 
     /**

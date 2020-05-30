@@ -1,7 +1,7 @@
 <template>
     <div class="mt-4">
         <h3 class="font-weight-bold">{{__('comments')}} <span class="text-success" v-if="messages.total > 0">{{messages.total}}</span></h3>
-        <div v-if="messages.data.length < 1" class="alert alert-info">{{__('empty_list')}}</div>
+        <div v-if="messages.data && messages.data.length < 1" class="alert alert-info">{{__('empty_list')}}</div>
         <div class="blog-comment" v-for="message in messages.data">
             <div class="new_post-header d-flex justify-content-between">
                 <div class="post-user">
