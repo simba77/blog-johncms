@@ -1,7 +1,7 @@
 <template>
     <div class="mt-4">
-        <h4 class="font-weight-bold">Комментарии:</h4>
-        <div class="new_post-item border-bottom shadow mb-2" v-for="message in messages.data">
+        <h3 class="font-weight-bold">Комментарии <span class="text-success">{{messages.total}}</span></h3>
+        <div class="blog-comment" v-for="message in messages.data">
             <div class="new_post-header d-flex justify-content-between">
                 <div class="post-user">
                     <a :href="message.user.profile_url" v-if="message.user.profile_url">
@@ -37,52 +37,52 @@
                     </div>
                 </div>
             </div>
-            <div class="post-body mt-2 border-top pt-2 pb-2" v-html="message.text"></div>
-            <div class="post-footer d-flex justify-content-between mt-2">
+            <div class="post-body pt-2 pb-2" v-html="message.text"></div>
+            <div class="post-footer d-flex justify-content-between">
                 <div class="overflow-hidden">
-                    <!--<div class="post-meta d-flex">
+                    <div class="post-meta d-flex">
                         <div class="user-ip mr-2">
-                            <a href="<?= $item['search_ip_url'] ?>"><?= $item['ip'] ?></a>
-                            <?php if (! empty($item['ip_via_proxy'])): ?>
-                            / <a href="<?= $item['search_ip_via_proxy_url'] ?>"><?= $item['ip_via_proxy'] ?></a>
-                            <?php endif; ?>
+                            <a href="">192.168.0.1</a>
                         </div>
                         <div class="useragent">
-                            <span><?= $item['user_agent'] ?></span>
+                            <span>Safari</span>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
                 <div class="d-flex">
-                    <!--<?php if (! empty($item['reply_url'])): ?>
                     <div class="ml-3">
-                        <a href="<?= $item['reply_url'] ?>"><?= __('Reply') ?></a>
+                        <a href="">Ответить</a>
                     </div>
-                    <?php endif; ?>
-                    <?php if (! empty($item['quote_url'])): ?>
                     <div class="ml-3">
-                        <a href="<?= $item['quote_url'] ?>"><?= __('Quote') ?></a>
+                        <a href="">Цитировать</a>
                     </div>
-                    <?php endif; ?>
-                    <?php if ($item['has_edit']): ?>
                     <div class="dropdown ml-3">
                         <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <svg class="icon text-primary">
-                                <use xlink:href="<?= $this->asset('icons/sprite.svg') ?>?1#more_horizontal"/>
+                                <use xlink:href="/themes/default/assets/icons/sprite.svg?#more_horizontal"/>
                             </svg>
                         </div>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="<?= $item['edit_url'] ?>" class="ml-2"><?= __('Edit') ?></a>
-                            <a class="dropdown-item" href="<?= $item['delete_url'] ?>" class="ml-2"><?= __('Delete') ?></a>
-                            <?php if (! empty($item['restore_url'])): ?>
-                            <a class="dropdown-item" href="<?= $item['restore_url'] ?>" class="ml-2"><?= __('Restore') ?></a>
-                            <?php endif; ?>
+                            <a class="dropdown-item" href="">Удалить</a>
                         </div>
                     </div>
-                    <?php endif; ?>-->
                 </div>
             </div>
         </div>
         <pagination :data="messages" @pagination-change-page="getComments" class="mt-3"></pagination>
+
+        <div class="mt-4">
+            <h3 class="font-weight-bold">Написать комментарий</h3>
+            <form action="">
+                <div style="max-width: 800px;">
+                    <textarea name="text" id="text" rows="6" required class="form-control"></textarea>
+                </div>
+                <div class="mt-2">
+                    <button type="submit" name="submit" value="1" class="btn btn-primary">Написать</button>
+                </div>
+            </form>
+        </div>
+
     </div>
 </template>
 
@@ -117,6 +117,10 @@
                             alert(error);
                             this.loading = false;
                         });
+            },
+            reply()
+            {
+
             }
         }
     }

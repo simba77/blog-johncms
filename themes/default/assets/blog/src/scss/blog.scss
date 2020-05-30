@@ -78,3 +78,14 @@ figure {
     z-index: 5;
     background: #f4f3ef94;
 }
+
+.blog-comment {
+    background: transparent;
+    padding: 10px 10px 10px 85px;
+    border-radius: 0;
+    border-bottom: 1px solid #dee2e6;
+
+    .post-body {
+        border-top: none;
+    }
+}
