@@ -44,8 +44,22 @@ if (! empty($article->tags)) {
             </div>
         <?php endif ?>
     </div>
-
-    <blog-comments :article_id="<?= $article->id ?>" :can_write="<?= $user->isValid() && empty($user->ban) ? 'true' : 'false' ?>"></blog-comments>
+    <?php
+    $messages = [
+        'write_comment' => __('Write a comment'),
+        'send'          => __('Send'),
+        'delete'        => __('Delete'),
+        'quote'         => __('Quote'),
+        'reply'         => __('Reply'),
+        'comments'      => __('Comments'),
+        'empty_list'    => __('The list is empty'),
+    ];
+    ?>
+    <blog-comments
+        :article_id="<?= $article->id ?>"
+        :can_write="<?= $user->isValid() && empty($user->ban) ? 'true' : 'false' ?>"
+        :i18n='<?= json_encode($messages) ?>'
+    ></blog-comments>
 
     <?php if (! $user->isValid()): ?>
         <div class="d-flex">

@@ -1,6 +1,7 @@
 <template>
     <div class="mt-4">
-        <h3 class="font-weight-bold">Комментарии <span class="text-success">{{messages.total}}</span></h3>
+        <h3 class="font-weight-bold">{{__('comments')}} <span class="text-success" v-if="messages.total > 0">{{messages.total}}</span></h3>
+        <div v-if="messages.data.length < 1" class="alert alert-info">{{__('empty_list')}}</div>
         <div class="blog-comment" v-for="message in messages.data">
             <div class="new_post-header d-flex justify-content-between">
                 <div class="post-user">
@@ -51,10 +52,10 @@
                 </div>
                 <div class="d-flex">
                     <div class="ml-3" v-if="message.can_reply">
-                        <a href="#" @click.prevent="reply(message)">Ответить</a>
+                        <a href="#" @click.prevent="reply(message)">{{__('reply')}}</a>
                     </div>
                     <div class="ml-3" v-if="message.can_quote">
-                        <a href="#" @click.prevent="quote(message)">Цитировать</a>
+                        <a href="#" @click.prevent="quote(message)">{{__('quote')}}</a>
                     </div>
                     <div class="dropdown ml-3" v-if="message.can_delete">
                         <div class="cursor-pointer" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,7 +64,7 @@
                             </svg>
                         </div>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="" @click.prevent="delComment(message.id)">Удалить</a>
+                            <a class="dropdown-item" href="" @click.prevent="delComment(message.id)">{{__('delete')}}</a>
                         </div>
                     </div>
                 </div>
@@ -72,7 +73,7 @@
         <pagination :data="messages" @pagination-change-page="getComments" class="mt-3"></pagination>
 
         <div class="mt-4" v-if="can_write">
-            <h3 class="font-weight-bold">Написать комментарий</h3>
+            <h3 class="font-weight-bold">{{__('write_comment')}}</h3>
             <form action="" @submit.prevent="sendComment">
                 <div class="d-flex" v-if="error_message">
                     <div class="alert alert-danger d-inline">{{error_message}}</div>
@@ -86,7 +87,7 @@
                 <div class="mt-2">
                     <button type="submit" name="submit" value="1" class="btn btn-primary" :disabled="loading">
                         <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" v-if="loading"></span>
-                        Написать
+                        {{__('send')}}
                     </button>
                     <div></div>
                 </div>
@@ -104,6 +105,20 @@
                 type: Boolean,
                 default: false,
             },
+            i18n: {
+                type: Object,
+                default: function () {
+                    return {
+                        write_comment: 'Write a comment',
+                        send: 'Send',
+                        delete: 'Delete',
+                        quote: 'Quote',
+                        reply: 'Reply',
+                        comments: 'Comments',
+                        empty_list: 'The list is empty',
+                    }
+                }
+            }
         },
         data()
         {
@@ -176,6 +191,10 @@
                             alert(error.response.data.message);
                             this.loading = false;
                         });
+            },
+            __(message)
+            {
+                return _.get(this.i18n, message, '');
             }
         }
     }
