@@ -116,6 +116,16 @@ class Comments extends AbstractAction
             $post_body = json_decode($post_body->getContents(), true);
         }
 
+        if (! empty($this->user->ban)) {
+            http_response_code(403);
+            Helpers::returnJson(['message' => __('You have a ban!')]);
+        }
+
+        if (! $this->user->isValid()) {
+            http_response_code(403);
+            Helpers::returnJson(['message' => __('You are not logged in')]);
+        }
+
         try {
             $article = (new BlogArticle())->findOrFail($article_id);
         } catch (ModelNotFoundException $exception) {

@@ -45,7 +45,15 @@ if (! empty($article->tags)) {
         <?php endif ?>
     </div>
 
-    <blog-comments :article_id="<?= $article->id ?>"></blog-comments>
+    <blog-comments :article_id="<?= $article->id ?>" :can_write="<?= $user->isValid() && empty($user->ban) ? 'true' : 'false' ?>"></blog-comments>
+
+    <?php if (! $user->isValid()): ?>
+        <div class="d-flex">
+            <div class="alert alert-warning">
+                <?= __('You are not logged in. You must be <a href="/login/">logged in</a> to comment.') ?>
+            </div>
+        </div>
+    <?php endif; ?>
 
     <div class="mt-3">
         <a href="<?= $current_section->url ?>"><?= __('Back') ?></a>

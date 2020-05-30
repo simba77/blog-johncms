@@ -71,7 +71,7 @@
         </div>
         <pagination :data="messages" @pagination-change-page="getComments" class="mt-3"></pagination>
 
-        <div class="mt-4">
+        <div class="mt-4" v-if="can_write">
             <h3 class="font-weight-bold">Написать комментарий</h3>
             <form action="" @submit.prevent="sendComment">
                 <div class="d-flex" v-if="error_message">
@@ -100,6 +100,10 @@
         name: "CommentsComponent",
         props: {
             article_id: Number,
+            can_write: {
+                type: Boolean,
+                default: false,
+            },
         },
         data()
         {
