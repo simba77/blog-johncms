@@ -52,6 +52,11 @@ if (empty($category) && ! empty($action_type)) {
             (new Comments())->add();
             break;
 
+        // Страница удаления комментария
+        case 'del_comment':
+            (new Comments())->del();
+            break;
+
         // Неизвестная страница
         default:
             pageNotFound();

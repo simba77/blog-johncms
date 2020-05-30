@@ -63,7 +63,7 @@
                             </svg>
                         </div>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" href="">Удалить</a>
+                            <a class="dropdown-item" href="" @click.prevent="delComment(message.id)">Удалить</a>
                         </div>
                     </div>
                 </div>
@@ -160,6 +160,20 @@
                         })
                         .catch(error => {
                             this.error_message = error.response.data.message;
+                            this.loading = false;
+                        });
+            },
+            delComment(comment_id)
+            {
+                this.loading = true;
+                axios.post('/blog/?action=del_comment', {
+                    comment_id: comment_id
+                })
+                        .then(response => {
+                            this.getComments(this.messages.current_page);
+                        })
+                        .catch(error => {
+                            alert(error.response.data.message);
                             this.loading = false;
                         });
             }

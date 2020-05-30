@@ -159,4 +159,34 @@ class Comments extends AbstractAction
             Helpers::returnJson(['message' => __('Enter the comment text')]);
         }
     }
+
+    public function del(): void
+    {
+        $post_body = $this->request->getBody();
+        if ($post_body) {
+            $post_body = json_decode($post_body->getContents(), true);
+        }
+
+        $comment_id = $post_body['comment_id'] ?? 0;
+
+        try {
+            $post = (new BlogComments())->findOrFail($comment_id);
+        } catch (ModelNotFoundException $exception) {
+            http_response_code(404);
+            Helpers::returnJson(['message' => $exception->getMessage()]);
+        }
+
+        if ($this->user->rights >= 6 || $this->user->id === $post->user_id) {
+            try {
+                $post->delete();
+                Helpers::returnJson(['message' => __('The comment was deleted successfully')]);
+            } catch (\Exception $e) {
+                http_response_code(500);
+                Helpers::returnJson(['message' => $e->getMessage()]);
+            }
+        } else {
+            http_response_code(403);
+            Helpers::returnJson(['message' => __('Access denied')]);
+        }
+    }
 }
