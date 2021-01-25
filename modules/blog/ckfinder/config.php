@@ -11,14 +11,12 @@
 
 use Johncms\Users\User;
 
-define('_IN_JOHNCMS', 1);
-define('DEBUG', 1);
 require __DIR__ . '/../../../system/bootstrap.php';
 
 // Production
 
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
-ini_set('display_errors', 0);
+ini_set('display_errors', '0');
 
 // Development
 // error_reporting(E_ALL);
