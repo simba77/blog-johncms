@@ -1,7 +1,6 @@
-let mix = require('laravel-mix');
+var section = 'default';
+if (process.env.npm_config_section) {
+    var section = process.env.npm_config_section;
+}
 
-mix.disableNotifications();
-mix.js('themes/default/assets/blog/src/js/blog.js', 'themes/default/assets/blog/js')
-        .sass('themes/default/assets/blog/src/scss/blog.scss', 'themes/default/assets/blog/css');
-
-mix.sourceMaps(true, 'source-map');
+require(__dirname + '/webpack.' + section + '.mix.js');
